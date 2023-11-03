@@ -1,0 +1,99 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+a {
+    text-decoration: none;
+    color: black;
+    font-family: monospace;
+    font-style: italic;
+}
+
+/* ________ Header ________ */
+
+header {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    border-bottom: 1px solid black;
+    margin-bottom: 20px;
+}
+.head {
+    display: flex;
+    flex-wrap: nowrap;
+}
+.logo {
+    width: 150px;
+    height: 90px;
+    margin-right: 5px;
+}
+.contacts {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    margin: 5px;
+}
+.icon {
+    width: 30px;
+    height: 30px;
+    margin-right: 5px;
+}
+.contact {
+    display: flex;
+    flex-wrap: nowrap;
+}
+.contact p {
+    display: flex;
+    align-items: center;
+}
+
+.navBar {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+}
+.navItem a {
+    margin-right: 20px;
+    font-size: large;
+}
+
+/* ___________ Main ___________ */
+
+main {
+    display: flex;
+    flex-wrap: nowrap;
+}
+section {
+    display: flex;
+    flex-wrap: nowrap;
+}
+div.card {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    width: 300px;
+    margin: 10px;
+    text-align: center;
+    font-family: monospace;
+}
+div.card img {
+    width: 300px;
+    height: 200px;
+}
+div.card div {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+    margin: 5px;
+}
+.cardBtn {
+    width: 130px;
+    padding: 5px;
+    border: none;
+    border-radius: 10px;
+    background-color: rgb(70, 155, 241);
+    color: rgb(241, 238, 238);
+}
+.card h2 { margin: 5px }
+.card h4 { margin: 5px }
+.card p { font-style: italic; }
