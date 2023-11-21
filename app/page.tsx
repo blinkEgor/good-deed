@@ -3,6 +3,7 @@ import { ArrowRightIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import styles from '@/app/ui/home.module.css';
 import variables from './variables.module.scss';
+import { lusitana } from '@/app/ui/fonts';
 
 export default function Page() {
   return (
@@ -15,7 +16,7 @@ export default function Page() {
         <div className={styles.shape}></div>
         {/* <div className="h-0 w-0 border-b-[30px] border-l-[20px] border-r-[20px] border-b-black border-l-transparent border-r-transparent"/> */}
           <h1 className={styles.successText}>Good deed</h1>
-          <p className={`text-xl text-gray-800 md:text-3xl md:leading-normal`}>
+          <p className={`${lusitana.className} text-xl text-gray-800 md:text-3xl md:leading-normal`}>
             <strong>Добро пожаловать в приложение Good Deed.</strong> Тут вы можете написать свой список добрых дел.
           </p>
           <Link
