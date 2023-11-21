@@ -5,13 +5,3 @@
     border-left: 20px solid transparent;
     border-right: 20px solid transparent;
 }
-
-.successText {
-    width: max-content;
-    color: #64ff00;
-    background-color: black;
-    padding: 0.8em;
-    border-radius: 1em;
-    font-size: large;
-    font-weight: bold;
-}
