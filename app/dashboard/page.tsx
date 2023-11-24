@@ -1,5 +1,5 @@
 export default function Page() {
     return (
-        <p>Страница информационной панели</p>
+        <h1>Домашняя страница</h1>
     )
 }

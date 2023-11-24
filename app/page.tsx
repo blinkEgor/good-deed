@@ -25,7 +25,10 @@ export default function Page() {
           </Link>
         </div>
         <div className="flex items-center justify-center p-6 md:w-3/5 md:px-28 md:py-12">
-          <Image 
+          <p className='w-64 text-center bg-gray-600 p-10 text-white rounded-lg'>
+            Тут будут снимки экрана приложения на разных устройстрвах
+          </p>
+          {/* <Image 
             src='/hero-desktop.png' 
             width={1000} 
             height={760} 
@@ -38,7 +41,7 @@ export default function Page() {
             height={620}
             className='block md:hidden'
             alt='Снимки экрана проекта панели мониторинга, показывающие мобильную версию'
-          />
+          /> */}
         </div>
       </div>
     </main>
