@@ -3,7 +3,9 @@ export default function Page() {
         <div>
             <div>
                 <div className="flex justify-between items-start md:w-2/3 sm:w-auto">
-                    <h1 className="bg-green-600 p-4 mb-4 rounded-s-lg w-full">Мой список добрых дел</h1>
+                    <h1 className="bg-green-600 p-4 mb-4 rounded-s-lg w-full">
+                        Мой список добрых дел
+                    </h1>
                     <input
                         className="border-none p-4 bg-green-500"
                     />
