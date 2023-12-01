@@ -11,11 +11,11 @@ export default async function Page() {
                 breadcrumbs={[
                     { 
                         label: 'Invoices', 
-                        href: '/dashboard/invoices', 
+                        href: '/dashboard/goodDeed', 
                     },
                     { 
                         label: 'Create Invoice', 
-                        href: '/dashboard/invoices/create', 
+                        href: '/dashboard/goodDeed/create', 
                         active: true, 
                     },
                 ]}
