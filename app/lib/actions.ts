@@ -28,6 +28,6 @@ export async function createInvoice(formData: FormData) {
         VALUES (${customerId}, ${amountInCents}, ${status}, ${date})
     `;
 
-    revalidatePath('@/app/dashboard/goodDeed');
-    redirect('@/app/dashboard/goodDeed');
+    revalidatePath('/dashboard/goodDeed');
+    redirect('/dashboard/goodDeed');
 };
