@@ -20,6 +20,7 @@
     "clsx": "^2.0.0",
     "debug": "^4.3.4",
     "next": "^14.0.2",
+    "next-auth": "^5.0.0-beta.4",
     "next-redux-wrapper": "^8.1.0",
     "node": "^20.10.0",
     "npm": "^10.2.4",
