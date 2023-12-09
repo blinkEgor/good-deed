@@ -10,7 +10,7 @@ import { fetchInvoicesPages } from '@/app/lib/data';
 import { Metadata } from 'next';
  
 export const metadata: Metadata = {
-  title: 'Deeds | Good deed',
+  title: 'Deeds',
 };
 
 export default async function Page({
