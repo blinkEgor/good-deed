@@ -60,7 +60,7 @@ const customers = [
   },
   {
     id: 'CC27C14A-0ACF-4F4A-A6C9-D45682C144B9',
-    name: 'Amy Burns',
+    name: 'Amy BBB',
     email: 'amy@burns.com',
     image_url: '/customers/amy-burns.png',
   },
