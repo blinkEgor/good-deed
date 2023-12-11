@@ -58,8 +58,8 @@ export async function fetchCardData() {
     const invoiceCountPromise = sql`SELECT COUNT(*) FROM invoices`;
     const customerCountPromise = sql`SELECT COUNT(*) FROM customers`;
     const invoiceStatusPromise = sql`SELECT
-         SUM(CASE WHEN status = 'paid' THEN amount ELSE 0 END) AS "paid",
-         SUM(CASE WHEN status = 'pending' THEN amount ELSE 0 END) AS "pending"
+         SUM(CASE WHEN status = 'done' THEN amount ELSE 0 END) AS "done",
+         SUM(CASE WHEN status = 'doing' THEN amount ELSE 0 END) AS "doing"
          FROM invoices`;
 
     const data = await Promise.all([
@@ -203,8 +203,8 @@ export async function fetchFilteredCustomers(query: string) {
 		  customers.email,
 		  customers.image_url,
 		  COUNT(invoices.id) AS total_invoices,
-		  SUM(CASE WHEN invoices.status = 'pending' THEN invoices.amount ELSE 0 END) AS total_pending,
-		  SUM(CASE WHEN invoices.status = 'paid' THEN invoices.amount ELSE 0 END) AS total_paid
+		  SUM(CASE WHEN invoices.status = 'doing' THEN invoices.amount ELSE 0 END) AS total_doing,
+		  SUM(CASE WHEN invoices.status = 'done' THEN invoices.amount ELSE 0 END) AS total_done
 		FROM customers
 		LEFT JOIN invoices ON customers.id = invoices.customer_id
 		WHERE

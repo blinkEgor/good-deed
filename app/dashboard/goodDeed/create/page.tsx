@@ -16,7 +16,7 @@ export default async function Page() {
         breadcrumbs={[
           { label: 'Good deed', href: '/dashboard/goodDeed' },
           {
-            label: 'Create goog deed',
+            label: 'Create good deed',
             href: '/dashboard/goodDeed/create',
             active: true,
           },
