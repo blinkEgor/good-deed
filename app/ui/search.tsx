@@ -37,7 +37,7 @@ export default function Search({ placeholder }: { placeholder: string }) {
         className="peer block w-full rounded-md border bg-gray-700 border-gray-500 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-200"
         placeholder={placeholder}
       />
-      <MagnifyingGlassIcon className="absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
+      <MagnifyingGlassIcon className="absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-200" />
     </div>
   );
 }
