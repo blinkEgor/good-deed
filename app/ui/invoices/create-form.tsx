@@ -94,7 +94,7 @@ export default function Form({ customers }: { customers: CustomerField[] }) {
                   name="status"
                   type="radio"
                   value="doing"
-                  className="h-4 w-4 cursor-pointer border-gray-400 bg-gray-300 text-gray-600 focus:ring-2"
+                  className="h-4 w-4 cursor-pointer border-gray-200 bg-gray-500 text-gray-300 focus:ring-2"
                 />
                 <label
                   htmlFor="doing"
@@ -109,7 +109,7 @@ export default function Form({ customers }: { customers: CustomerField[] }) {
                   name="status"
                   type="radio"
                   value="done"
-                  className="h-4 w-4 cursor-pointer border-gray-400 bg-gray-300 text-gray-600 focus:ring-2"
+                  className="h-4 w-4 cursor-pointer border-gray-200 bg-gray-500 text-gray-300 focus:ring-2"
                 />
                 <label
                   htmlFor="done"
