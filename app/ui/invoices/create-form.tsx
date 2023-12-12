@@ -98,7 +98,7 @@ export default function Form({ customers }: { customers: CustomerField[] }) {
                 />
                 <label
                   htmlFor="doing"
-                  className="ml-2 flex cursor-pointer items-center gap-1.5 rounded-full bg-gray-600 px-3 py-1.5 text-xs font-medium text-gray-200"
+                  className="ml-2 flex cursor-pointer items-center gap-1.5 rounded-full bg-gray-500 px-3 py-1.5 text-xs font-medium text-gray-200"
                 >
                   Doing <ClockIcon className="h-4 w-4" />
                 </label>
@@ -137,7 +137,7 @@ export default function Form({ customers }: { customers: CustomerField[] }) {
         >
           Cancel
         </Link>
-        <Button type="submit">Create Invoice</Button>
+        <Button type="submit">Create Good deed</Button>
       </div>
     </form>
   );
