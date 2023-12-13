@@ -34,20 +34,20 @@ export async function fetchLatestInvoices() {
   
   try {
     const data = await sql<LatestInvoiceRaw>`
-      SELECT invoices.amount, customers.name, customers.image_url, customers.email, invoices.id
-      FROM invoices
-      JOIN customers ON invoices.customer_id = customers.id
-      ORDER BY invoices.date DESC
+      SELECT good_deeds.amount, customers.name, customers.image_url, customers.email, good_deeds.id
+      FROM good_deeds
+      JOIN customers ON good_deeds.customer_id = customers.id
+      ORDER BY good_deeds.date DESC
       LIMIT 5`;
 
-    const latestInvoices = data.rows.map((invoice) => ({
-      ...invoice,
-      amount: formatCurrency(invoice.amount),
+    const latestInvoices = data.rows.map((good_deed) => ({
+      ...good_deed,
+      amount: formatCurrency(good_deed.amount),
     }));
     return latestInvoices;
   } catch (error) {
     console.error('Database Error:', error);
-    throw new Error('Failed to fetch the latest invoices.');
+    throw new Error('Failed to fetch the latest good_deeds.');
   }
 }
 
@@ -55,12 +55,12 @@ export async function fetchCardData() {
   noStore();
   
   try {
-    const invoiceCountPromise = sql`SELECT COUNT(*) FROM invoices`;
+    const invoiceCountPromise = sql`SELECT COUNT(*) FROM good_deeds`;
     const customerCountPromise = sql`SELECT COUNT(*) FROM customers`;
     const invoiceStatusPromise = sql`SELECT
          SUM(CASE WHEN status = 'done' THEN amount ELSE 0 END) AS "done",
          SUM(CASE WHEN status = 'doing' THEN amount ELSE 0 END) AS "doing"
-         FROM invoices`;
+         FROM good_deeds`;
 
     const data = await Promise.all([
       invoiceCountPromise,
@@ -97,29 +97,29 @@ export async function fetchFilteredInvoices(
   try {
     const invoices = await sql<InvoicesTable>`
       SELECT
-        invoices.id,
-        invoices.amount,
-        invoices.date,
-        invoices.status,
+        good_deeds.id,
+        good_deeds.amount,
+        good_deeds.date,
+        good_deeds.status,
         customers.name,
         customers.email,
         customers.image_url
-      FROM invoices
-      JOIN customers ON invoices.customer_id = customers.id
+      FROM good_deeds
+      JOIN customers ON good_deeds.customer_id = customers.id
       WHERE
         customers.name ILIKE ${`%${query}%`} OR
         customers.email ILIKE ${`%${query}%`} OR
-        invoices.amount::text ILIKE ${`%${query}%`} OR
-        invoices.date::text ILIKE ${`%${query}%`} OR
-        invoices.status ILIKE ${`%${query}%`}
-      ORDER BY invoices.date DESC
+        good_deeds.amount::text ILIKE ${`%${query}%`} OR
+        good_deeds.date::text ILIKE ${`%${query}%`} OR
+        good_deeds.status ILIKE ${`%${query}%`}
+      ORDER BY good_deeds.date DESC
       LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
     `;
 
     return invoices.rows;
   } catch (error) {
     console.error('Database Error:', error);
-    throw new Error('Failed to fetch invoices.');
+    throw new Error('Failed to fetch good_deeds.');
   }
 }
 
@@ -128,14 +128,14 @@ export async function fetchInvoicesPages(query: string) {
   
   try {
     const count = await sql`SELECT COUNT(*)
-    FROM invoices
-    JOIN customers ON invoices.customer_id = customers.id
+    FROM good_deeds
+    JOIN customers ON good_deeds.customer_id = customers.id
     WHERE
       customers.name ILIKE ${`%${query}%`} OR
       customers.email ILIKE ${`%${query}%`} OR
-      invoices.amount::text ILIKE ${`%${query}%`} OR
-      invoices.date::text ILIKE ${`%${query}%`} OR
-      invoices.status ILIKE ${`%${query}%`}
+      good_deeds.amount::text ILIKE ${`%${query}%`} OR
+      good_deeds.date::text ILIKE ${`%${query}%`} OR
+      good_deeds.status ILIKE ${`%${query}%`}
   `;
 
     const totalPages = Math.ceil(Number(count.rows[0].count) / ITEMS_PER_PAGE);
@@ -152,23 +152,23 @@ export async function fetchInvoiceById(id: string) {
   try {
     const data = await sql<InvoiceForm>`
       SELECT
-        invoices.id,
-        invoices.customer_id,
-        invoices.amount,
-        invoices.status
-      FROM invoices
-      WHERE invoices.id = ${id};
+        good_deeds.id,
+        good_deeds.customer_id,
+        good_deeds.amount,
+        good_deeds.status
+      FROM good_deeds
+      WHERE good_deeds.id = ${id};
     `;
 
-    const invoice = data.rows.map((invoice) => ({
-      ...invoice,
-      amount: invoice.amount / 100,
+    const good_deed = data.rows.map((good_deed) => ({
+      ...good_deed,
+      amount: good_deed.amount / 100,
     }));
 
-    return invoice[0];
+    return good_deed[0];
   } catch (error) {
     console.error('Database Error:', error);
-    throw new Error('Failed to fetch invoice.');
+    throw new Error('Failed to fetch good_deeds.');
   }
 }
 
@@ -202,11 +202,11 @@ export async function fetchFilteredCustomers(query: string) {
 		  customers.name,
 		  customers.email,
 		  customers.image_url,
-		  COUNT(invoices.id) AS total_invoices,
-		  SUM(CASE WHEN invoices.status = 'doing' THEN invoices.amount ELSE 0 END) AS total_doing,
-		  SUM(CASE WHEN invoices.status = 'done' THEN invoices.amount ELSE 0 END) AS total_done
+		  COUNT(good_deeds.id) AS total_invoices,
+		  SUM(CASE WHEN good_deeds.status = 'doing' THEN good_deeds.amount ELSE 0 END) AS total_doing,
+		  SUM(CASE WHEN good_deeds.status = 'done' THEN good_deeds.amount ELSE 0 END) AS total_done
 		FROM customers
-		LEFT JOIN invoices ON customers.id = invoices.customer_id
+		LEFT JOIN good_deeds ON customers.id = good_deeds.customer_id
 		WHERE
 		  customers.name ILIKE ${`%${query}%`} OR
         customers.email ILIKE ${`%${query}%`}

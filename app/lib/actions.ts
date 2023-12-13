@@ -44,7 +44,7 @@ export async function createInvoice(prevState: State, formData: FormData) {
   if (!validatedFields.success) {
     return {
       errors: validatedFields.error.flatten().fieldErrors,
-      message: 'Missing Fields. Failed to Create Invoice.',
+      message: 'Missing Fields. Failed to Create Good deed.',
     };
   }
  
@@ -54,12 +54,12 @@ export async function createInvoice(prevState: State, formData: FormData) {
  
   try {
     await sql`
-      INSERT INTO invoices (customer_id, amount, status, date)
+      INSERT INTO good_deeds (customer_id, amount, status, date)
       VALUES (${customerId}, ${amountInCents}, ${status}, ${date})
     `;
   } catch (error) {
     return {
-      message: 'Database Error: Failed to Create Invoice.',
+      message: 'Database Error: Failed to Create Good deed.',
     };
   }
  
@@ -81,7 +81,7 @@ export async function updateInvoice(
   if (!validatedFields.success) {
     return {
       errors: validatedFields.error.flatten().fieldErrors,
-      message: 'Missing Fields. Failed to Update Invoice.',
+      message: 'Missing Fields. Failed to Update Good deed.',
     };
   }
  
@@ -90,12 +90,12 @@ export async function updateInvoice(
  
   try {
     await sql`
-      UPDATE invoices
+      UPDATE good_deeds
       SET customer_id = ${customerId}, amount = ${amountInCents}, status = ${status}
       WHERE id = ${id}
     `;
   } catch (error) {
-    return { message: 'Database Error: Failed to Update Invoice.' };
+    return { message: 'Database Error: Failed to Update Good deed.' };
   }
  
   revalidatePath('/dashboard/goodDeed');
@@ -104,11 +104,11 @@ export async function updateInvoice(
 
 export async function deleteInvoice(id: string) {
   try {
-    await sql`DELETE FROM invoices WHERE id = ${id}`;
+    await sql`DELETE FROM good_deeds WHERE id = ${id}`;
     revalidatePath('/dashboard/goodDeed');
   } catch (error) {
     return {
-      message: 'Database Error: Failed to Delete Invoice.',
+      message: 'Database Error: Failed to Delete Good deed.',
     }
   }
 }
