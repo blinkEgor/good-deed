@@ -1,10 +1,9 @@
-// import ViewDeed from "@/app/ui/dashboard/goodDeedView";
 import Pagination from '@/app/ui/good-deeds/pagination';
 import Search from '@/app/ui/search';
 import Table from '@/app/ui/good-deeds/table';
 import { CreateInvoice } from '@/app/ui/good-deeds/buttons';
 import { lusitana } from '@/app/ui/fonts';
-import { InvoicesTableSkeleton } from '@/app/ui/skeletons';
+import { GoodDeedsTableSkeleton } from '@/app/ui/skeletons';
 import { Suspense } from 'react';
 import { fetchInvoicesPages } from '@/app/lib/data';
 import { Metadata } from 'next';
@@ -35,7 +34,7 @@ export default async function Page({
         <Search placeholder="Search good deeds..." />
         <CreateInvoice />
       </div>
-       <Suspense key={query + currentPage} fallback={<InvoicesTableSkeleton />}>
+       <Suspense key={query + currentPage} fallback={<GoodDeedsTableSkeleton />}>
         <Table query={query} currentPage={currentPage} />
       </Suspense>
       <div className="mt-5 flex w-full justify-center">

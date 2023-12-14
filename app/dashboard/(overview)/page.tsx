@@ -5,7 +5,7 @@ import CardWrapper from '@/app/ui/dashboard/cards';
 import { Suspense } from 'react';
 import { 
   RevenueChartSkeleton, 
-  LatestInvoicesSkeleton,
+  LatestGoodDeedsSkeleton,
   CardsSkeleton,  
 } from '@/app/ui/skeletons';
 import { Metadata } from 'next';
@@ -29,7 +29,7 @@ export default async function Page() {
         <Suspense fallback={<RevenueChartSkeleton />}>
           <RevenueChart />
         </Suspense>
-        <Suspense fallback={<LatestInvoicesSkeleton />}>
+        <Suspense fallback={<LatestGoodDeedsSkeleton />}>
           <LatestInvoices />
         </Suspense>
       </div>
