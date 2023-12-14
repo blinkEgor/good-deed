@@ -202,7 +202,7 @@ export function GoodDeedsTableSkeleton() {
                 </th>
               </tr>
             </thead>
-            <tbody className="bg-gray-600">
+            <tbody className="bg-gray-700">
               <TableRowSkeleton />
               <TableRowSkeleton />
               <TableRowSkeleton />
