@@ -81,6 +81,33 @@ export default function Form({ customers }: { customers: CustomerField[] }) {
           </div>
         </div>
 
+        {/* Deed */}
+        <div className="mb-4">
+          <label htmlFor="deed" className="mb-2 block text-sm font-medium">
+            Choose an deed
+          </label>
+          <div className="relative mt-2 rounded-md">
+            <div className="relative">
+              <input
+                id="deed"
+                name="deed"
+                type="text"
+                step="0.01"
+                placeholder="Enter your deed"
+                className="peer block w-full rounded-md border border-gray-500 py-2 pl-10 text-sm outline-2 placeholder:text-gray-100 bg-gray-600"
+              />
+            </div>
+            <div id="deed-error" aria-live="polite" aria-atomic="true">
+              {state.errors?.deed &&
+                state.errors.deed.map((error: string) => (
+                <p className="mt-2 text-sm text-red-500" key={error}>
+                  {error}
+                </p>
+              ))}
+            </div>
+          </div>
+        </div>
+
         {/* Invoice Status */}
         <fieldset>
           <legend className="mb-2 block text-sm font-medium">

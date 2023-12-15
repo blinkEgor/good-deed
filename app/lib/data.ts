@@ -99,16 +99,16 @@ export async function fetchFilteredInvoices(
       SELECT
         good_deeds.id,
         good_deeds.amount,
+        good_deeds.deed,
         good_deeds.date,
         good_deeds.status,
         customers.name,
-        customers.email,
         customers.image_url
       FROM good_deeds
       JOIN customers ON good_deeds.customer_id = customers.id
       WHERE
         customers.name ILIKE ${`%${query}%`} OR
-        customers.email ILIKE ${`%${query}%`} OR
+        good_deeds.deed ILIKE ${`%${query}%`} OR
         good_deeds.amount::text ILIKE ${`%${query}%`} OR
         good_deeds.date::text ILIKE ${`%${query}%`} OR
         good_deeds.status ILIKE ${`%${query}%`}

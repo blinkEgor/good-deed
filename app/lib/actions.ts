@@ -16,8 +16,11 @@ const FormSchema = z.object({
   amount: z.coerce
     .number()
     .gt(0, { message: 'Please enter an amount greater than $0.' }),
+  deed: z.string({
+    invalid_type_error: 'Please write a text.',
+  }),
   status: z.enum(['doing', 'done'], {
-    invalid_type_error: 'Please select an invoice status.',
+    invalid_type_error: 'Please select an good deed status.',
   }),
   date: z.string(),
 });
@@ -29,6 +32,7 @@ export type State = {
   errors?: {
     customerId?: string[];
     amount?: string[];
+    deed?: string[];
     status?: string[];
   };
   message?: string | null;
@@ -38,6 +42,7 @@ export async function createInvoice(prevState: State, formData: FormData) {
   const validatedFields = CreateInvoice.safeParse({
     customerId: formData.get('customerId'),
     amount: formData.get('amount'),
+    deed: formData.get('deed'),
     status: formData.get('status'),
   });
  
@@ -48,14 +53,14 @@ export async function createInvoice(prevState: State, formData: FormData) {
     };
   }
  
-  const { customerId, amount, status } = validatedFields.data;
+  const { customerId, amount, deed, status } = validatedFields.data;
   const amountInCents = amount * 100;
   const date = new Date().toISOString().split('T')[0];
  
   try {
     await sql`
-      INSERT INTO good_deeds (customer_id, amount, status, date)
-      VALUES (${customerId}, ${amountInCents}, ${status}, ${date})
+      INSERT INTO good_deeds (customer_id, amount, deed, status, date)
+      VALUES (${customerId}, ${amountInCents}, ${deed}, ${status}, ${date})
     `;
   } catch (error) {
     return {

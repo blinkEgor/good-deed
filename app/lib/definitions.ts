@@ -35,7 +35,7 @@ export type LatestInvoice = {
   id: string;
   name: string;
   image_url: string;
-  email: string;
+  deed: string;
   amount: string;
 };
 
@@ -48,7 +48,7 @@ export type InvoicesTable = {
   id: string;
   customer_id: string;
   name: string;
-  email: string;
+  deed: string;
   image_url: string;
   date: string;
   amount: number;
@@ -84,5 +84,6 @@ export type InvoiceForm = {
   id: string;
   customer_id: string;
   amount: number;
+  deed: string;
   status: 'doing' | 'done';
 };
