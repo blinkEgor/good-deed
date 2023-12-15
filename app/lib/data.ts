@@ -1,7 +1,7 @@
 import { sql } from '@vercel/postgres';
 import {
   CustomerField,
-  CustomersTable,
+  FriendsTable,
   InvoiceForm,
   InvoicesTable,
   LatestInvoiceRaw,
@@ -196,7 +196,7 @@ export async function fetchFilteredCustomers(query: string) {
   noStore();
   
   try {
-    const data = await sql<CustomersTable>`
+    const data = await sql<FriendsTable>`
 		SELECT
 		  customers.id,
 		  customers.name,

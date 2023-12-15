@@ -55,7 +55,7 @@ export type InvoicesTable = {
   status: 'doing' | 'done';
 };
 
-export type CustomersTable = {
+export type FriendsTable = {
   id: string;
   name: string;
   email: string;
@@ -65,7 +65,7 @@ export type CustomersTable = {
   total_paid: number;
 };
 
-export type FormattedCustomersTable = {
+export type FormattedFriendsTable = {
   id: string;
   name: string;
   email: string;
