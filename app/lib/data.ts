@@ -3,7 +3,7 @@ import {
   CustomerField,
   FriendsTable,
   InvoiceForm,
-  InvoicesTable,
+  GoodDeedsTable,
   LatestInvoiceRaw,
   User,
   Revenue,
@@ -86,7 +86,7 @@ export async function fetchCardData() {
 }
 
 const ITEMS_PER_PAGE = 6;
-export async function fetchFilteredInvoices(
+export async function fetchFilteredGoodDeeds(
   query: string,
   currentPage: number,
 ) {
@@ -95,7 +95,7 @@ export async function fetchFilteredInvoices(
   const offset = (currentPage - 1) * ITEMS_PER_PAGE;
 
   try {
-    const invoices = await sql<InvoicesTable>`
+    const goodDeeds = await sql<GoodDeedsTable>`
       SELECT
         good_deeds.id,
         good_deeds.amount,
@@ -116,7 +116,7 @@ export async function fetchFilteredInvoices(
       LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
     `;
 
-    return invoices.rows;
+    return goodDeeds.rows;
   } catch (error) {
     console.error('Database Error:', error);
     throw new Error('Failed to fetch good_deeds.');

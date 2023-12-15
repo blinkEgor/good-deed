@@ -2,7 +2,7 @@ import Image from 'next/image';
 import { UpdateInvoice, DeleteInvoice } from '@/app/ui/good-deeds/buttons';
 import InvoiceStatus from '@/app/ui/good-deeds/status';
 import { formatDateToLocal, formatCurrency } from '@/app/lib/utils';
-import { fetchFilteredInvoices } from '@/app/lib/data';
+import { fetchFilteredGoodDeeds } from '@/app/lib/data';
 
 export default async function InvoicesTable({
   query,
@@ -11,16 +11,16 @@ export default async function InvoicesTable({
   query: string;
   currentPage: number;
 }) {
-  const invoices = await fetchFilteredInvoices(query, currentPage);
+  const goodDeeds = await fetchFilteredGoodDeeds(query, currentPage);
 
   return (
     <div className="mt-6 flow-root text-gray-200">
       <div className="inline-block min-w-full align-middle">
         <div className="rounded-lg bg-gray-700 p-2 md:pt-0">
           <div className="md:hidden">
-            {invoices?.map((invoice) => (
+            {goodDeeds?.map((goodDeed) => (
               <div
-                key={invoice.id}
+                key={goodDeed.id}
                 className="mb-2 w-full rounded-md p-4"
               >
                 <div className="flex items-center justify-between border-b pb-4">
@@ -28,26 +28,26 @@ export default async function InvoicesTable({
                     <div className="mb-2 flex items-center">
                       <Image
                         alt='invoice image'
-                        src={invoice.image_url}
+                        src={goodDeed.image_url}
                         className="mr-2 rounded-full"
                         width={28}
                         height={28}
                       />
-                      <p>{invoice.name}</p>
+                      <p>{goodDeed.name}</p>
                     </div>
                   </div>
-                  <InvoiceStatus status={invoice.status} />
+                  <InvoiceStatus status={goodDeed.status} />
                 </div>
                 <div className="flex w-full items-center justify-between pt-4">
                   <div>
                     <p className="text-xl font-medium">
-                      {formatCurrency(invoice.amount)}
+                      {formatCurrency(goodDeed.amount)}
                     </p>
-                    <p>{formatDateToLocal(invoice.date)}</p>
+                    <p>{formatDateToLocal(goodDeed.date)}</p>
                   </div>
                   <div className="flex justify-end gap-2">
-                    <UpdateInvoice id={invoice.id} />
-                    <DeleteInvoice id={invoice.id} />
+                    <UpdateInvoice id={goodDeed.id} />
+                    <DeleteInvoice id={goodDeed.id} />
                   </div>
                 </div>
               </div>
@@ -77,39 +77,39 @@ export default async function InvoicesTable({
               </tr>
             </thead>
             <tbody className="text-gray-200">
-              {invoices?.map((invoice) => (
+              {goodDeeds?.map((goodDeed) => (
                 <tr
-                  key={invoice.id}
+                  key={goodDeed.id}
                   className="w-full border-b py-3 text-sm last-of-type:border-none [&:first-child>td:first-child]:rounded-tl-lg [&:first-child>td:last-child]:rounded-tr-lg [&:last-child>td:first-child]:rounded-bl-lg [&:last-child>td:last-child]:rounded-br-lg"
                 >
                   <td className="whitespace-nowrap py-3 pl-6 pr-3">
                     <div className="flex items-center gap-3">
                       <Image
                         alt='invoice image'
-                        src={invoice.image_url}
+                        src={goodDeed.image_url}
                         className="rounded-full"
                         width={28}
                         height={28}
                       />
-                      <p>{invoice.name}</p>
+                      <p>{goodDeed.name}</p>
                     </div>
                   </td>
                   <td className="whitespace-nowrap px-3 py-3">
-                    {formatCurrency(invoice.amount)}
+                    {formatCurrency(goodDeed.amount)}
                   </td>
                   <td className='whitespace-wrap px-3 py-3'>
-                    {invoice.deed}
+                    {goodDeed.deed}
                   </td>
                   <td className="whitespace-nowrap px-3 py-3">
-                    {formatDateToLocal(invoice.date)}
+                    {formatDateToLocal(goodDeed.date)}
                   </td>
                   <td className="whitespace-nowrap px-3 py-3">
-                    <InvoiceStatus status={invoice.status} />
+                    <InvoiceStatus status={goodDeed.status} />
                   </td>
                   <td className="whitespace-nowrap py-3 pl-6 pr-3">
                     <div className="flex justify-end gap-3">
-                      <UpdateInvoice id={invoice.id} />
-                      <DeleteInvoice id={invoice.id} />
+                      <UpdateInvoice id={goodDeed.id} />
+                      <DeleteInvoice id={goodDeed.id} />
                     </div>
                   </td>
                 </tr>
