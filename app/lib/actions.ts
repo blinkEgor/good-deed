@@ -25,7 +25,7 @@ const FormSchema = z.object({
   date: z.string(),
 });
 
-const CreateInvoice = FormSchema.omit({ id: true, date: true });
+const CreateGoodDeed = FormSchema.omit({ id: true, date: true });
 const UpdateInvoice = FormSchema.omit({ id: true, date: true });
 
 export type State = {
@@ -38,8 +38,8 @@ export type State = {
   message?: string | null;
 };
 
-export async function createInvoice(prevState: State, formData: FormData) {
-  const validatedFields = CreateInvoice.safeParse({
+export async function createGoodDeed(prevState: State, formData: FormData) {
+  const validatedFields = CreateGoodDeed.safeParse({
     customerId: formData.get('customerId'),
     amount: formData.get('amount'),
     deed: formData.get('deed'),

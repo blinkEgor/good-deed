@@ -1,11 +1,11 @@
 import Pagination from '@/app/ui/good-deeds/pagination';
 import Search from '@/app/ui/search';
-import Table from '@/app/ui/good-deeds/table';
+import GoodDeedsTable from '@/app/ui/good-deeds/table';
 import { CreateGoodDeed } from '@/app/ui/good-deeds/buttons';
 import { lusitana } from '@/app/ui/fonts';
 import { GoodDeedsTableSkeleton } from '@/app/ui/skeletons';
 import { Suspense } from 'react';
-import { fetchInvoicesPages } from '@/app/lib/data';
+import { fetchGoodDeedsPages } from '@/app/lib/data';
 import { Metadata } from 'next';
  
 export const metadata: Metadata = {
@@ -23,7 +23,7 @@ export default async function Page({
     const query = searchParams?.query || '';
     const currentPage = Number(searchParams?.page) || 1;
 
-    const totalPages = await fetchInvoicesPages(query);
+    const totalPages = await fetchGoodDeedsPages(query);
 
     return (
     <div className="w-full bg-gray-800">
@@ -35,7 +35,7 @@ export default async function Page({
         <CreateGoodDeed />
       </div>
        <Suspense key={query + currentPage} fallback={<GoodDeedsTableSkeleton />}>
-        <Table query={query} currentPage={currentPage} />
+        <GoodDeedsTable query={query} currentPage={currentPage} />
       </Suspense>
       <div className="mt-5 flex w-full justify-center">
         <Pagination totalPages={totalPages} />

@@ -4,7 +4,7 @@ import InvoiceStatus from '@/app/ui/good-deeds/status';
 import { formatDateToLocal, formatCurrency } from '@/app/lib/utils';
 import { fetchFilteredGoodDeeds } from '@/app/lib/data';
 
-export default async function InvoicesTable({
+export default async function GoodDeedsTable({
   query,
   currentPage,
 }: {

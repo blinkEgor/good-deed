@@ -108,7 +108,7 @@ export async function fetchFilteredGoodDeeds(
       JOIN customers ON good_deeds.customer_id = customers.id
       WHERE
         customers.name ILIKE ${`%${query}%`} OR
-        good_deeds.deed ILIKE ${`%${query}%`} OR
+        good_deeds.deed::text ILIKE ${`%${query}%`} OR
         good_deeds.amount::text ILIKE ${`%${query}%`} OR
         good_deeds.date::text ILIKE ${`%${query}%`} OR
         good_deeds.status ILIKE ${`%${query}%`}
@@ -123,7 +123,7 @@ export async function fetchFilteredGoodDeeds(
   }
 }
 
-export async function fetchInvoicesPages(query: string) {
+export async function fetchGoodDeedsPages(query: string) {
   noStore();
   
   try {
@@ -132,7 +132,7 @@ export async function fetchInvoicesPages(query: string) {
     JOIN customers ON good_deeds.customer_id = customers.id
     WHERE
       customers.name ILIKE ${`%${query}%`} OR
-      customers.email ILIKE ${`%${query}%`} OR
+      good_deeds.deed::text ILIKE ${`%${query}%`} OR
       good_deeds.amount::text ILIKE ${`%${query}%`} OR
       good_deeds.date::text ILIKE ${`%${query}%`} OR
       good_deeds.status ILIKE ${`%${query}%`}
