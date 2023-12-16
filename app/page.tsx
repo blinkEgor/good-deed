@@ -1,10 +1,10 @@
 import Logo from '@/app/ui/logo';
 import { ArrowRightIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
-import styles from '@/app/ui/home.module.css';
+// import styles from '@/app/ui/home.module.css';
 // import variables from './variables.module.scss';
 import { lusitana } from '@/app/ui/fonts';
-import Image from 'next/image';
+// import Image from 'next/image';
 
 export default function Page() {
   return (

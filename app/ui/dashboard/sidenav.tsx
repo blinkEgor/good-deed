@@ -26,7 +26,7 @@ export default function SideNav() {
         >
           <button className="flex h-[48px] w-full grow items-center justify-center gap-2 rounded-md text-gray-400 p-3 text-sm font-medium hover:bg-gray-600 hover:text-gray-200 md:flex-none md:justify-start md:p-2 md:px-3">
             <PowerIcon className="w-6" />
-            <div className="hidden md:block">Выход</div>
+            <div className="hidden md:block">Exit</div>
           </button>
         </form>
       </div>

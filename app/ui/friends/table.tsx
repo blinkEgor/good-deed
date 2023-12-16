@@ -46,15 +46,15 @@ export default async function FriendsTable({
                     <div className="flex w-full items-center justify-between border-b py-5">
                       <div className="flex w-1/2 flex-col">
                         <p className="text-xs">Doing</p>
-                        <p className="font-medium">{customer.total_pending}</p>
+                        <p className="font-medium">{customer.total_doing}</p>
                       </div>
                       <div className="flex w-1/2 flex-col">
                         <p className="text-xs">Done</p>
-                        <p className="font-medium">{customer.total_paid}</p>
+                        <p className="font-medium">{customer.total_done}</p>
                       </div>
                     </div>
                     <div className="pt-4 text-sm">
-                      <p>{customer.total_invoices} Good deeds</p>
+                      <p>{customer.total_good_deeds} Good deeds</p>
                     </div>
                   </div>
                 ))}
@@ -66,10 +66,10 @@ export default async function FriendsTable({
                       Name
                     </th>
                     <th scope="col" className="px-3 py-5 font-medium">
-                      Email
+                      Deed
                     </th>
                     <th scope="col" className="px-3 py-5 font-medium">
-                      Total Invoices
+                      Total Good Deeds
                     </th>
                     <th scope="col" className="px-3 py-5 font-medium">
                       Total Doing
@@ -99,13 +99,13 @@ export default async function FriendsTable({
                         {customer.email}
                       </td>
                       <td className="whitespace-nowrap bg-white px-4 py-5 text-sm">
-                        {customer.total_invoices}
+                        {customer.total_good_deeds}
                       </td>
                       <td className="whitespace-nowrap bg-white px-4 py-5 text-sm">
-                        {customer.total_pending}
+                        {customer.total_doing}
                       </td>
                       <td className="whitespace-nowrap bg-white px-4 py-5 text-sm group-first-of-type:rounded-md group-last-of-type:rounded-md">
-                        {customer.total_paid}
+                        {customer.total_done}
                       </td>
                     </tr>
                   ))}

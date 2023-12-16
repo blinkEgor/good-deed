@@ -1,7 +1,7 @@
 import { lusitana } from '@/app/ui/fonts';
 import { Metadata } from 'next';
-import { Suspense } from 'react';
-import FriendsTable from '@/app/ui/friends/table';
+// import { Suspense } from 'react';
+// import FriendsTable from '@/app/ui/friends/table';
  
 export const metadata: Metadata = {
   title: 'Friends',

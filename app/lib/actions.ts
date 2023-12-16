@@ -26,7 +26,7 @@ const FormSchema = z.object({
 });
 
 const CreateGoodDeed = FormSchema.omit({ id: true, date: true });
-const UpdateInvoice = FormSchema.omit({ id: true, date: true });
+const UpdateGoodDeed = FormSchema.omit({ id: true, date: true });
 
 export type State = {
   errors?: {
@@ -72,14 +72,15 @@ export async function createGoodDeed(prevState: State, formData: FormData) {
   redirect('/dashboard/goodDeed');
 }
 
-export async function updateInvoice(
+export async function updateGoodDeed(
   id: string,
   prevState: State,
   formData: FormData,
 ) {
-  const validatedFields = UpdateInvoice.safeParse({
+  const validatedFields = UpdateGoodDeed.safeParse({
     customerId: formData.get('customerId'),
     amount: formData.get('amount'),
+    deed: formData.get('deed'),
     status: formData.get('status'),
   });
  
@@ -90,13 +91,13 @@ export async function updateInvoice(
     };
   }
  
-  const { customerId, amount, status } = validatedFields.data;
+  const { customerId, amount, deed, status } = validatedFields.data;
   const amountInCents = amount * 100;
  
   try {
     await sql`
       UPDATE good_deeds
-      SET customer_id = ${customerId}, amount = ${amountInCents}, status = ${status}
+      SET customer_id = ${customerId}, amount = ${amountInCents}, deed = ${deed} status = ${status}
       WHERE id = ${id}
     `;
   } catch (error) {
@@ -107,7 +108,7 @@ export async function updateInvoice(
   redirect('/dashboard/goodDeed');
 }
 
-export async function deleteInvoice(id: string) {
+export async function deleteGoodDeed(id: string) {
   try {
     await sql`DELETE FROM good_deeds WHERE id = ${id}`;
     revalidatePath('/dashboard/goodDeed');

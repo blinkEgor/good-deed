@@ -1,6 +1,6 @@
 import Image from 'next/image';
-import { UpdateInvoice, DeleteInvoice } from '@/app/ui/good-deeds/buttons';
-import InvoiceStatus from '@/app/ui/good-deeds/status';
+import { UpdateGoodDeed, DeleteGoodDeed } from '@/app/ui/good-deeds/buttons';
+import GoodDeedStatus from '@/app/ui/good-deeds/status';
 import { formatDateToLocal, formatCurrency } from '@/app/lib/utils';
 import { fetchFilteredGoodDeeds } from '@/app/lib/data';
 
@@ -36,7 +36,7 @@ export default async function GoodDeedsTable({
                       <p>{goodDeed.name}</p>
                     </div>
                   </div>
-                  <InvoiceStatus status={goodDeed.status} />
+                  <GoodDeedStatus status={goodDeed.status} />
                 </div>
                 <div className="flex w-full items-center justify-between pt-4">
                   <div>
@@ -46,8 +46,8 @@ export default async function GoodDeedsTable({
                     <p>{formatDateToLocal(goodDeed.date)}</p>
                   </div>
                   <div className="flex justify-end gap-2">
-                    <UpdateInvoice id={goodDeed.id} />
-                    <DeleteInvoice id={goodDeed.id} />
+                    <UpdateGoodDeed id={goodDeed.id} />
+                    <DeleteGoodDeed id={goodDeed.id} />
                   </div>
                 </div>
               </div>
@@ -85,7 +85,7 @@ export default async function GoodDeedsTable({
                   <td className="whitespace-nowrap py-3 pl-6 pr-3">
                     <div className="flex items-center gap-3">
                       <Image
-                        alt='invoice image'
+                        alt='good deed image'
                         src={goodDeed.image_url}
                         className="rounded-full"
                         width={28}
@@ -104,12 +104,12 @@ export default async function GoodDeedsTable({
                     {formatDateToLocal(goodDeed.date)}
                   </td>
                   <td className="whitespace-nowrap px-3 py-3">
-                    <InvoiceStatus status={goodDeed.status} />
+                    <GoodDeedStatus status={goodDeed.status} />
                   </td>
                   <td className="whitespace-nowrap py-3 pl-6 pr-3">
                     <div className="flex justify-end gap-3">
-                      <UpdateInvoice id={goodDeed.id} />
-                      <DeleteInvoice id={goodDeed.id} />
+                      <UpdateGoodDeed id={goodDeed.id} />
+                      <DeleteGoodDeed id={goodDeed.id} />
                     </div>
                   </td>
                 </tr>

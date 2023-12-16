@@ -2,9 +2,9 @@ import { sql } from '@vercel/postgres';
 import {
   CustomerField,
   FriendsTable,
-  InvoiceForm,
+  GoodDeedForm,
   GoodDeedsTable,
-  LatestInvoiceRaw,
+  LatestGoodDeedRaw,
   User,
   Revenue,
 } from './definitions';
@@ -29,22 +29,22 @@ export async function fetchRevenue() {
   }
 }
 
-export async function fetchLatestInvoices() {
+export async function fetchLatestGoodDeeds() {
   noStore();
   
   try {
-    const data = await sql<LatestInvoiceRaw>`
+    const data = await sql<LatestGoodDeedRaw>`
       SELECT good_deeds.amount, customers.name, customers.image_url, customers.email, good_deeds.id
       FROM good_deeds
       JOIN customers ON good_deeds.customer_id = customers.id
       ORDER BY good_deeds.date DESC
       LIMIT 5`;
 
-    const latestInvoices = data.rows.map((good_deed) => ({
+    const latestGoodDeeds = data.rows.map((good_deed) => ({
       ...good_deed,
       amount: formatCurrency(good_deed.amount),
     }));
-    return latestInvoices;
+    return latestGoodDeeds;
   } catch (error) {
     console.error('Database Error:', error);
     throw new Error('Failed to fetch the latest good_deeds.');
@@ -55,29 +55,29 @@ export async function fetchCardData() {
   noStore();
   
   try {
-    const invoiceCountPromise = sql`SELECT COUNT(*) FROM good_deeds`;
+    const goodDeedCountPromise = sql`SELECT COUNT(*) FROM good_deeds`;
     const customerCountPromise = sql`SELECT COUNT(*) FROM customers`;
-    const invoiceStatusPromise = sql`SELECT
+    const goodDeedStatusPromise = sql`SELECT
          SUM(CASE WHEN status = 'done' THEN amount ELSE 0 END) AS "done",
          SUM(CASE WHEN status = 'doing' THEN amount ELSE 0 END) AS "doing"
          FROM good_deeds`;
 
     const data = await Promise.all([
-      invoiceCountPromise,
+      goodDeedCountPromise,
       customerCountPromise,
-      invoiceStatusPromise,
+      goodDeedStatusPromise,
     ]);
 
-    const numberOfInvoices = Number(data[0].rows[0].count ?? '0');
+    const numberOfGoodDeeds = Number(data[0].rows[0].count ?? '0');
     const numberOfCustomers = Number(data[1].rows[0].count ?? '0');
-    const totalPaidInvoices = formatCurrency(data[2].rows[0].paid ?? '0');
-    const totalPendingInvoices = formatCurrency(data[2].rows[0].pending ?? '0');
+    const totalDoneGoodDeeds = formatCurrency(data[2].rows[0].done ?? '0');
+    const totalDoingGoodDeeds = formatCurrency(data[2].rows[0].doing ?? '0');
 
     return {
       numberOfCustomers,
-      numberOfInvoices,
-      totalPaidInvoices,
-      totalPendingInvoices,
+      numberOfGoodDeeds,
+      totalDoneGoodDeeds,
+      totalDoingGoodDeeds,
     };
   } catch (error) {
     console.error('Database Error:', error);
@@ -146,15 +146,16 @@ export async function fetchGoodDeedsPages(query: string) {
   }
 }
 
-export async function fetchInvoiceById(id: string) {
+export async function fetchGoodDeedById(id: string) {
   noStore();
   
   try {
-    const data = await sql<InvoiceForm>`
+    const data = await sql<GoodDeedForm>`
       SELECT
         good_deeds.id,
         good_deeds.customer_id,
         good_deeds.amount,
+        good_deeds.deed,
         good_deeds.status
       FROM good_deeds
       WHERE good_deeds.id = ${id};
@@ -216,8 +217,8 @@ export async function fetchFilteredCustomers(query: string) {
 
     const customers = data.rows.map((customer) => ({
       ...customer,
-      total_pending: formatCurrency(customer.total_pending),
-      total_paid: formatCurrency(customer.total_paid),
+      total_doing: formatCurrency(customer.total_doing),
+      total_done: formatCurrency(customer.total_done),
     }));
 
     return customers;

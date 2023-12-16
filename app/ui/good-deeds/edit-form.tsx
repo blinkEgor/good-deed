@@ -1,6 +1,6 @@
 'use client';
 
-import { CustomerField, InvoiceForm } from '@/app/lib/definitions';
+import { CustomerField, GoodDeedForm } from '@/app/lib/definitions';
 import {
   CheckIcon,
   ClockIcon,
@@ -9,19 +9,19 @@ import {
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { Button } from '@/app/ui/button';
-import { updateInvoice } from '@/app/lib/actions';
+import { updateGoodDeed } from '@/app/lib/actions';
 import { useFormState } from 'react-dom';
 
-export default function EditInvoiceForm({
-  invoice,
+export default function EditGoodDeedForm({
+  good_deed,
   customers,
 }: {
-  invoice: InvoiceForm;
+  good_deed: GoodDeedForm;
   customers: CustomerField[];
 }) {
   const initialState = { message: null, errors: {} };
-  const updateInvoiceWithId = updateInvoice.bind(null, invoice.id);
-  const [state, dispatch] = useFormState(updateInvoiceWithId, initialState);
+  const updateGoodDeedWithId = updateGoodDeed.bind(null, good_deed.id);
+  const [state, dispatch] = useFormState(updateGoodDeedWithId, initialState);
  
   return (
     <form action={dispatch}>
@@ -36,7 +36,7 @@ export default function EditInvoiceForm({
               id="customer"
               name="customerId"
               className="peer block w-full cursor-pointer rounded-md border border-gray-500 py-2 pl-10 text-sm outline-2 placeholder:text-gray-200 bg-gray-600"
-              defaultValue={invoice.customer_id}
+              defaultValue={good_deed.customer_id}
             >
               <option value="" disabled>
                 Select a customer
@@ -71,7 +71,7 @@ export default function EditInvoiceForm({
                 name="amount"
                 type="number"
                 step="0.01"
-                defaultValue={invoice.amount}
+                defaultValue={good_deed.amount}
                 placeholder="Enter USD amount"
                 className="peer block w-full rounded-md border border-gray-500 py-2 pl-10 text-sm outline-2 placeholder:text-gray-200 bg-gray-600"
               />
@@ -80,6 +80,34 @@ export default function EditInvoiceForm({
             <div id="amount-error" aria-live="polite" aria-atomic="true">
               {state.errors?.amount &&
                 state.errors.amount.map((error: string) => (
+                <p className="mt-2 text-sm text-red-500" key={error}>
+                  {error}
+                </p>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Deed */}
+        <div className="mb-4">
+          <label htmlFor="deed" className="mb-2 block text-sm font-medium">
+            Choose a deed
+          </label>
+          <div className="relative mt-2 rounded-md">
+            <div className="relative">
+              <input
+                id="deed"
+                name="deed"
+                type="text"
+                step="0.01"
+                defaultValue={good_deed.deed}
+                placeholder="Enter your deed"
+                className="peer block w-full rounded-md border border-gray-500 py-2 text-sm outline-2 placeholder:text-gray-100 bg-gray-600"
+              />
+            </div>
+            <div id="deed-error" aria-live="polite" aria-atomic="true">
+              {state.errors?.deed &&
+                state.errors.deed.map((error: string) => (
                 <p className="mt-2 text-sm text-red-500" key={error}>
                   {error}
                 </p>
@@ -101,7 +129,7 @@ export default function EditInvoiceForm({
                   name="status"
                   type="radio"
                   value="doing"
-                  defaultChecked={invoice.status === 'doing'}
+                  defaultChecked={good_deed.status === 'doing'}
                   className="h-4 w-4 cursor-pointer border-gray-200 bg-gray-500 text-gray-300 focus:ring-2"
                 />
                 <label
@@ -117,7 +145,7 @@ export default function EditInvoiceForm({
                   name="status"
                   type="radio"
                   value="done"
-                  defaultChecked={invoice.status === 'done'}
+                  defaultChecked={good_deed.status === 'done'}
                   className="h-4 w-4 cursor-pointer border-gray-200 bg-gray-500 text-gray-300 focus:ring-2"
                 />
                 <label

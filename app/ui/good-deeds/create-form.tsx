@@ -84,7 +84,7 @@ export default function Form({ customers }: { customers: CustomerField[] }) {
         {/* Deed */}
         <div className="mb-4">
           <label htmlFor="deed" className="mb-2 block text-sm font-medium">
-            Choose an deed
+            Choose a deed
           </label>
           <div className="relative mt-2 rounded-md">
             <div className="relative">
@@ -94,7 +94,7 @@ export default function Form({ customers }: { customers: CustomerField[] }) {
                 type="text"
                 step="0.01"
                 placeholder="Enter your deed"
-                className="peer block w-full rounded-md border border-gray-500 py-2 pl-10 text-sm outline-2 placeholder:text-gray-100 bg-gray-600"
+                className="peer block w-full rounded-md border border-gray-500 py-2 text-sm outline-2 placeholder:text-gray-100 bg-gray-600"
               />
             </div>
             <div id="deed-error" aria-live="polite" aria-atomic="true">
