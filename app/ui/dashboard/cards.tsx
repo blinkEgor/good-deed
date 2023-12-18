@@ -18,14 +18,14 @@ export default async function CardWrapper() {
   const {
     numberOfGoodDeeds,
     numberOfCustomers,
-    totalDoneGoodDeeds,
-    totalDoingGoodDeeds,
+    // totalDoneGoodDeeds,
+    // totalDoingGoodDeeds,
   } = await fetchCardData();
 
   return (
     <>
-      <Card title="Collected" value={totalDoneGoodDeeds} type="collected" />
-      <Card title="Doing" value={totalDoingGoodDeeds} type="doing" />
+      {/* <Card title="Collected" value={totalDoneGoodDeeds} type="collected" />
+      <Card title="Doing" value={totalDoingGoodDeeds} type="doing" /> */}
       <Card title="Total Good Deeds" value={numberOfGoodDeeds} type="good_deeds" />
       <Card
         title="Total Customers"
