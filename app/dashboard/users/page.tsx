@@ -11,7 +11,7 @@ export default function Page() {
     return (
         <main>
             <div>
-                <h1 className={`${lusitana.className} mb-4 text-xl md:text-2xl text-gray-200`}>Friends</h1>
+                <h1 className={`${lusitana.className} mb-4 text-xl md:text-2xl text-gray-200`}>Users</h1>
             </div>
         </main>
     )
