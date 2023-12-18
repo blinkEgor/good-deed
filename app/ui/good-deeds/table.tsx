@@ -39,12 +39,17 @@ export default async function GoodDeedsTable({
                   <GoodDeedStatus status={goodDeed.status} />
                 </div>
                 <div className="flex w-full items-center justify-between pt-4">
-                  <div>
-                    <p>{formatDateToLocal(goodDeed.date)}</p>
+                  <div className='text-gray-100'>
+                    <p>{goodDeed.deed}</p>
                   </div>
-                  <div className="flex justify-end gap-2">
-                    <UpdateGoodDeed id={goodDeed.id} />
-                    <DeleteGoodDeed id={goodDeed.id} />
+                  <div className='flex flex-col items-center'>
+                    <div className="flex justify-end gap-2">
+                      <UpdateGoodDeed id={goodDeed.id} />
+                      <DeleteGoodDeed id={goodDeed.id} />
+                    </div>
+                    <div className='text-gray-300 mt-3 text-xs'>
+                        <p>{formatDateToLocal(goodDeed.date)}</p>
+                    </div>
                   </div>
                 </div>
               </div>
