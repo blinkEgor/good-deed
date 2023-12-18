@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { UpdateGoodDeed, DeleteGoodDeed } from '@/app/ui/good-deeds/buttons';
 import GoodDeedStatus from '@/app/ui/good-deeds/status';
-import { formatDateToLocal, formatCurrency } from '@/app/lib/utils';
+import { formatDateToLocal } from '@/app/lib/utils';
 import { fetchFilteredGoodDeeds } from '@/app/lib/data';
 
 export default async function GoodDeedsTable({
@@ -40,9 +40,6 @@ export default async function GoodDeedsTable({
                 </div>
                 <div className="flex w-full items-center justify-between pt-4">
                   <div>
-                    <p className="text-xl font-medium">
-                      {formatCurrency(goodDeed.amount)}
-                    </p>
                     <p>{formatDateToLocal(goodDeed.date)}</p>
                   </div>
                   <div className="flex justify-end gap-2">
@@ -58,9 +55,6 @@ export default async function GoodDeedsTable({
               <tr>
                 <th scope="col" className="px-4 py-5 font-medium sm:pl-6">
                   Customer
-                </th>
-                <th scope="col" className="px-3 py-5 font-medium">
-                  Amount
                 </th>
                 <th scope="col" className="px-3 py-5 font-medium">
                   Deed
@@ -93,9 +87,6 @@ export default async function GoodDeedsTable({
                       />
                       <p>{goodDeed.name}</p>
                     </div>
-                  </td>
-                  <td className="whitespace-nowrap px-3 py-3">
-                    {formatCurrency(goodDeed.amount)}
                   </td>
                   <td className='whitespace-wrap px-3 py-3'>
                     {goodDeed.deed}

@@ -5,7 +5,7 @@ import Link from 'next/link';
 import {
   CheckIcon,
   ClockIcon,
-  CurrencyDollarIcon,
+  // CurrencyDollarIcon,
   UserCircleIcon,
 } from '@heroicons/react/24/outline';
 import { Button } from '@/app/ui/button';
@@ -53,7 +53,7 @@ export default function Form({ customers }: { customers: CustomerField[] }) {
           </div>
         </div>
 
-        {/* Invoice Amount */}
+        {/* Invoice Amount
         <div className="mb-4">
           <label htmlFor="amount" className="mb-2 block text-sm font-medium">
             Choose an amount
@@ -79,7 +79,7 @@ export default function Form({ customers }: { customers: CustomerField[] }) {
               ))}
             </div>
           </div>
-        </div>
+        </div> */}
 
         {/* Deed */}
         <div className="mb-4">
@@ -108,7 +108,7 @@ export default function Form({ customers }: { customers: CustomerField[] }) {
           </div>
         </div>
 
-        {/* Invoice Status */}
+        {/* GoodDeed Status */}
         <fieldset>
           <legend className="mb-2 block text-sm font-medium">
             Set the good deed status

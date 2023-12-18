@@ -13,9 +13,9 @@ const FormSchema = z.object({
   customerId: z.string({
     invalid_type_error: 'Please select a customer.',
   }),
-  amount: z.coerce
-    .number()
-    .gt(0, { message: 'Please enter an amount greater than $0.' }),
+  // amount: z.coerce
+  //   .number()
+  //   .gt(0, { message: 'Please enter an amount greater than $0.' }),
   deed: z.string({
     invalid_type_error: 'Please write a text.',
   }),
@@ -31,7 +31,7 @@ const UpdateGoodDeed = FormSchema.omit({ id: true, date: true });
 export type State = {
   errors?: {
     customerId?: string[];
-    amount?: string[];
+    // amount?: string[];
     deed?: string[];
     status?: string[];
   };
@@ -41,7 +41,7 @@ export type State = {
 export async function createGoodDeed(prevState: State, formData: FormData) {
   const validatedFields = CreateGoodDeed.safeParse({
     customerId: formData.get('customerId'),
-    amount: formData.get('amount'),
+    // amount: formData.get('amount'),
     deed: formData.get('deed'),
     status: formData.get('status'),
   });
@@ -53,14 +53,14 @@ export async function createGoodDeed(prevState: State, formData: FormData) {
     };
   }
  
-  const { customerId, amount, deed, status } = validatedFields.data;
-  const amountInCents = amount * 100;
+  const { customerId, /*amount, */deed, status } = validatedFields.data;
+  // const amountInCents = amount * 100;
   const date = new Date().toISOString().split('T')[0];
  
   try {
     await sql`
-      INSERT INTO good_deeds (customer_id, amount, deed, status, date)
-      VALUES (${customerId}, ${amountInCents}, ${deed}, ${status}, ${date})
+      INSERT INTO good_deeds (customer_id, deed, status, date)
+      VALUES (${customerId}, ${deed}, ${status}, ${date})
     `;
   } catch (error) {
     return {
@@ -91,13 +91,13 @@ export async function updateGoodDeed(
     };
   }
  
-  const { customerId, amount, deed, status } = validatedFields.data;
-  const amountInCents = amount * 100;
+  const { customerId, /*amount,*/ deed, status } = validatedFields.data;
+  // const amountInCents = amount * 100;
  
   try {
     await sql`
       UPDATE good_deeds
-      SET customer_id = ${customerId}, amount = ${amountInCents}, deed = ${deed} status = ${status}
+      SET customer_id = ${customerId}, deed = ${deed}, status = ${status}
       WHERE id = ${id}
     `;
   } catch (error) {
