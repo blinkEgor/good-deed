@@ -4,7 +4,7 @@ import { CustomerField, GoodDeedForm } from '@/app/lib/definitions';
 import {
   CheckIcon,
   ClockIcon,
-  CurrencyDollarIcon,
+  // CurrencyDollarIcon,
   UserCircleIcon,
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
@@ -60,7 +60,7 @@ export default function EditGoodDeedForm({
         </div>
 
         {/* Invoice Amount */}
-        <div className="mb-4">
+        {/* <div className="mb-4">
           <label htmlFor="amount" className="mb-2 block text-sm font-medium">
             Choose an amount
           </label>
@@ -86,7 +86,7 @@ export default function EditGoodDeedForm({
               ))}
             </div>
           </div>
-        </div>
+        </div> */}
 
         {/* Deed */}
         <div className="mb-4">
@@ -116,7 +116,7 @@ export default function EditGoodDeedForm({
           </div>
         </div>
 
-        {/* Invoice Status */}
+        {/* Good Deed Status */}
         <fieldset>
           <legend className="mb-2 block text-sm font-medium">
             Set the good deed status
