@@ -15,7 +15,7 @@ export type Customer = {
 export type GoodDeed = {
   id: string;
   customer_id: string;
-  amount: number;
+  // amount: number;
   deed: string;
   date: string;
   status: 'doing' | 'done';
@@ -31,7 +31,7 @@ export type LatestGoodDeed = {
   name: string;
   image_url: string;
   deed: string;
-  amount: string;
+  // amount: string;
 };
 
 // The database returns a number for amount, but we later format it to a string with the formatCurrency function
@@ -46,7 +46,7 @@ export type GoodDeedsTable = {
   deed: string;
   image_url: string;
   date: string;
-  amount: number;
+  // amount: number;
   status: 'doing' | 'done';
 };
 
@@ -78,7 +78,7 @@ export type CustomerField = {
 export type GoodDeedForm = {
   id: string;
   customer_id: string;
-  amount: number;
+  // amount: number;
   deed: string;
   status: 'doing' | 'done';
 };

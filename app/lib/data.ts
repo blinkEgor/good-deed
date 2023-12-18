@@ -8,7 +8,7 @@ import {
   User,
   Revenue,
 } from './definitions';
-import { formatCurrency } from './utils';
+// import { formatCurrency } from './utils';
 import { unstable_noStore as noStore } from 'next/cache';
 
 export async function fetchRevenue() {
@@ -34,15 +34,15 @@ export async function fetchLatestGoodDeeds() {
   
   try {
     const data = await sql<LatestGoodDeedRaw>`
-      SELECT good_deeds.amount, customers.name, customers.image_url, customers.email, good_deeds.id
+      SELECT customers.name, customers.image_url, customers.email, good_deeds.id
       FROM good_deeds
       JOIN customers ON good_deeds.customer_id = customers.id
       ORDER BY good_deeds.date DESC
       LIMIT 5`;
 
-    const latestGoodDeeds = data.rows.map((good_deed) => ({
-      ...good_deed,
-      amount: formatCurrency(good_deed.amount),
+    const latestGoodDeeds = data.rows.map((deed) => ({
+      ...deed,
+      // amount: formatCurrency(good_deed.amount),
     }));
     return latestGoodDeeds;
   } catch (error) {
@@ -57,27 +57,27 @@ export async function fetchCardData() {
   try {
     const goodDeedCountPromise = sql`SELECT COUNT(*) FROM good_deeds`;
     const customerCountPromise = sql`SELECT COUNT(*) FROM customers`;
-    const goodDeedStatusPromise = sql`SELECT
-         SUM(CASE WHEN status = 'done' THEN amount ELSE 0 END) AS "done",
-         SUM(CASE WHEN status = 'doing' THEN amount ELSE 0 END) AS "doing"
-         FROM good_deeds`;
+    // const goodDeedStatusPromise = sql`SELECT
+    //      SUM(CASE WHEN status = 'done' THEN amount ELSE 0 END) AS "done",
+    //      SUM(CASE WHEN status = 'doing' THEN amount ELSE 0 END) AS "doing"
+    //      FROM good_deeds`;
 
     const data = await Promise.all([
       goodDeedCountPromise,
       customerCountPromise,
-      goodDeedStatusPromise,
+      // goodDeedStatusPromise,
     ]);
 
     const numberOfGoodDeeds = Number(data[0].rows[0].count ?? '0');
     const numberOfCustomers = Number(data[1].rows[0].count ?? '0');
-    const totalDoneGoodDeeds = formatCurrency(data[2].rows[0].done ?? '0');
-    const totalDoingGoodDeeds = formatCurrency(data[2].rows[0].doing ?? '0');
+    // const totalDoneGoodDeeds = formatCurrency(data[2].rows[0].done ?? '0');
+    // const totalDoingGoodDeeds = formatCurrency(data[2].rows[0].doing ?? '0');
 
     return {
       numberOfCustomers,
       numberOfGoodDeeds,
-      totalDoneGoodDeeds,
-      totalDoingGoodDeeds,
+      // totalDoneGoodDeeds,
+      // totalDoingGoodDeeds,
     };
   } catch (error) {
     console.error('Database Error:', error);
@@ -98,7 +98,6 @@ export async function fetchFilteredGoodDeeds(
     const goodDeeds = await sql<GoodDeedsTable>`
       SELECT
         good_deeds.id,
-        good_deeds.amount,
         good_deeds.deed,
         good_deeds.date,
         good_deeds.status,
@@ -109,7 +108,6 @@ export async function fetchFilteredGoodDeeds(
       WHERE
         customers.name ILIKE ${`%${query}%`} OR
         good_deeds.deed::text ILIKE ${`%${query}%`} OR
-        good_deeds.amount::text ILIKE ${`%${query}%`} OR
         good_deeds.date::text ILIKE ${`%${query}%`} OR
         good_deeds.status ILIKE ${`%${query}%`}
       ORDER BY good_deeds.date DESC
@@ -133,7 +131,6 @@ export async function fetchGoodDeedsPages(query: string) {
     WHERE
       customers.name ILIKE ${`%${query}%`} OR
       good_deeds.deed::text ILIKE ${`%${query}%`} OR
-      good_deeds.amount::text ILIKE ${`%${query}%`} OR
       good_deeds.date::text ILIKE ${`%${query}%`} OR
       good_deeds.status ILIKE ${`%${query}%`}
   `;
@@ -142,7 +139,7 @@ export async function fetchGoodDeedsPages(query: string) {
     return totalPages;
   } catch (error) {
     console.error('Database Error:', error);
-    throw new Error('Failed to fetch total number of invoices.');
+    throw new Error('Failed to fetch total number of good deeds.');
   }
 }
 
@@ -154,7 +151,6 @@ export async function fetchGoodDeedById(id: string) {
       SELECT
         good_deeds.id,
         good_deeds.customer_id,
-        good_deeds.amount,
         good_deeds.deed,
         good_deeds.status
       FROM good_deeds
@@ -163,13 +159,12 @@ export async function fetchGoodDeedById(id: string) {
 
     const good_deed = data.rows.map((good_deed) => ({
       ...good_deed,
-      amount: good_deed.amount / 100,
     }));
 
     return good_deed[0];
   } catch (error) {
     console.error('Database Error:', error);
-    throw new Error('Failed to fetch good_deeds.');
+    throw new Error('Failed to fetch good deeds.');
   }
 }
 
@@ -203,9 +198,8 @@ export async function fetchFilteredCustomers(query: string) {
 		  customers.name,
 		  customers.email,
 		  customers.image_url,
-		  COUNT(good_deeds.id) AS total_invoices,
-		  SUM(CASE WHEN good_deeds.status = 'doing' THEN good_deeds.amount ELSE 0 END) AS total_doing,
-		  SUM(CASE WHEN good_deeds.status = 'done' THEN good_deeds.amount ELSE 0 END) AS total_done
+		  COUNT(good_deeds.id) AS total_good_deeds,
+
 		FROM customers
 		LEFT JOIN good_deeds ON customers.id = good_deeds.customer_id
 		WHERE
@@ -217,8 +211,8 @@ export async function fetchFilteredCustomers(query: string) {
 
     const customers = data.rows.map((customer) => ({
       ...customer,
-      total_doing: formatCurrency(customer.total_doing),
-      total_done: formatCurrency(customer.total_done),
+      // total_doing: formatCurrency(customer.total_doing),
+      // total_done: formatCurrency(customer.total_done),
     }));
 
     return customers;
