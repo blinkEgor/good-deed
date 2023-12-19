@@ -13,9 +13,6 @@ const FormSchema = z.object({
   customerId: z.string({
     invalid_type_error: 'Please select a customer.',
   }),
-  // amount: z.coerce
-  //   .number()
-  //   .gt(0, { message: 'Please enter an amount greater than $0.' }),
   deed: z.string({
     invalid_type_error: 'Please write a text.',
   }),
@@ -31,7 +28,6 @@ const UpdateGoodDeed = FormSchema.omit({ id: true, date: true });
 export type State = {
   errors?: {
     customerId?: string[];
-    // amount?: string[];
     deed?: string[];
     status?: string[];
   };
@@ -41,7 +37,6 @@ export type State = {
 export async function createGoodDeed(prevState: State, formData: FormData) {
   const validatedFields = CreateGoodDeed.safeParse({
     customerId: formData.get('customerId'),
-    // amount: formData.get('amount'),
     deed: formData.get('deed'),
     status: formData.get('status'),
   });
@@ -53,8 +48,8 @@ export async function createGoodDeed(prevState: State, formData: FormData) {
     };
   }
  
-  const { customerId, /*amount, */deed, status } = validatedFields.data;
-  // const amountInCents = amount * 100;
+  const { customerId, deed, status } = validatedFields.data;
+
   const date = new Date().toISOString().split('T')[0];
  
   try {
@@ -91,8 +86,7 @@ export async function updateGoodDeed(
     };
   }
  
-  const { customerId, /*amount,*/ deed, status } = validatedFields.data;
-  // const amountInCents = amount * 100;
+  const { customerId, deed, status } = validatedFields.data;
  
   try {
     await sql`
