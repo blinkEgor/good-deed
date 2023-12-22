@@ -1,10 +1,10 @@
-import { useState } from 'react';
+// import { useState } from 'react';
 import { useRouter } from 'next/router';
 
 export default function RegistrationForm() {
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  // const [username, setUsername] = useState('');
+  // const [email, setEmail] = useState('');
+  // const [password, setPassword] = useState('');
   const router = useRouter();
 
   const handleSubmit = async (e:any) => {
@@ -16,7 +16,7 @@ export default function RegistrationForm() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ username, email, password }),
+        // body: JSON.stringify({ username, email, password }),
       });
 
       if (response.ok) {
@@ -38,8 +38,8 @@ export default function RegistrationForm() {
                 type="text"
                 name="name"
                 placeholder="Enter your username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                // value={username}
+                // onChange={(e) => setUsername(e.target.value)}
                 required
             />
         </div>
@@ -50,8 +50,8 @@ export default function RegistrationForm() {
                 type="email"
                 name="email"
                 placeholder="Enter your email address"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                // value={email}
+                // onChange={(e) => setEmail(e.target.value)}
                 required
             />
         </div>
@@ -62,8 +62,8 @@ export default function RegistrationForm() {
                 type="password"
                 name="password"
                 placeholder="Enter your password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                // value={password}
+                // onChange={(e) => setPassword(e.target.value)}
                 required
             />
         </div>
