@@ -1,11 +1,11 @@
 // import { useState } from 'react';
-import { useRouter } from 'next/router';
+// import { useRouter } from 'next/router';
 
 export default function RegistrationForm() {
   // const [username, setUsername] = useState('');
   // const [email, setEmail] = useState('');
   // const [password, setPassword] = useState('');
-  const router = useRouter();
+  // const router = useRouter();
 
   const handleSubmit = async (e:any) => {
     e.preventDefault();
@@ -20,7 +20,7 @@ export default function RegistrationForm() {
       });
 
       if (response.ok) {
-        router.push('@/app/dashboard');
+        // router.push('@/app/dashboard');
       } else {
         console.error('Error during registration.');
       }
