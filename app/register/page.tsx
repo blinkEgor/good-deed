@@ -33,6 +33,7 @@ export default function Register() {
         <label>
           Username:
           <input
+            className='bg-gray-600'
             type="text"
             {...register('username', { required: 'Username is required' })}
           />
@@ -44,6 +45,7 @@ export default function Register() {
         <label>
           Password:
           <input
+            className='bg-gray-600'
             type="password"
             {...register('password', { required: 'Password is required' })}
           />
