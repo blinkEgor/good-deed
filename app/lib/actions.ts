@@ -6,6 +6,7 @@ import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { signIn } from '@/auth';
 import { AuthError } from 'next-auth';
+import { addUser } from '@/auth';
 
 
 const FormSchema = z.object({
@@ -128,6 +129,20 @@ export async function authenticate(
           return 'Something went wrong.';
       }
     }
+    throw error;
+  }
+}
+
+export async function registration(
+  prevState: string | undefined,
+  formData: FormData,
+) {
+  try {
+    console.log('registration success!');
+    console.log(formData);
+    await addUser('name', 'email', 'password', formData)
+  } catch (error) {
+    console.log('comething wrong!!!');
     throw error;
   }
 }

@@ -1,63 +1,22 @@
-'use client'
+import { Metadata } from 'next';
+import Logo from '../ui/logo';
+import RegisterForm from '../ui/register-form';
+ 
+export const metadata: Metadata = {
+  title: 'Register',
+};
 
-import { useState } from 'react';
-import { useForm, SubmitHandler } from 'react-hook-form';
-
-interface FormData {
-  username: string;
-  password: string;
-}
-
-export default function Register() {
-  const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
-  const [registrationMessage, setRegistrationMessage] = useState('');
-
-  const onSubmit: SubmitHandler<FormData> = async (data) => {
-    // Here, you would typically make an API request to your backend
-    // to handle user registration and store the data securely.
-
-    // For simplicity, we'll just log the details to the console.
-    console.log('Registering user:', data);
-
-    // Update the state or redirect the user after successful registration.
-    setRegistrationMessage('Registration successful!');
-  };
-
+export default function RegisterPage() {
   return (
-    <div className='text-gray-100'>
-      <h1>Registration Page</h1>
-      <form
-        className='flex-col items-center' 
-        onSubmit={handleSubmit(onSubmit)}
-      >
-        <label>
-          Username:
-          <input
-            className='bg-gray-600'
-            type="text"
-            {...register('username', { required: 'Username is required' })}
-          />
-        </label>
-        <div>{errors.username && <span>{errors.username.message}</span>}</div>
-
-        <br />
-
-        <label>
-          Password:
-          <input
-            className='bg-gray-600'
-            type="password"
-            {...register('password', { required: 'Password is required' })}
-          />
-        </label>
-        <div>{errors.password && <span>{errors.password.message}</span>}</div>
-
-        <br />
-
-        <button type="submit">Register</button>
-      </form>
-
-      <div>{registrationMessage}</div>
-    </div>
+    <main className="flex items-center justify-center md:h-screen">
+      <div className="relative mx-auto flex w-full max-w-[400px] flex-col space-y-2.5 p-4 md:-mt-32">
+          <div className="flex h-20 w-full items-end rounded-lg bg-gray-700 p-3 md:h-36">
+              <div className="w-32 text-white md:w-36">
+                  <Logo />
+              </div>
+          </div>
+          <RegisterForm />
+      </div>
+  </main>
   );
 };
