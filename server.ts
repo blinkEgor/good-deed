@@ -17,14 +17,14 @@ const pool = new Pool({
 app.use(json());
 
 // Define the registration endpoint
-app.post('app/register', async (req, res) => {
+app.post('@/api/register', async (req, res) => {
     try {
-        const { username, password, } = req.body;
+        const { name, email, password, } = req.body;
 
         // Insert user into the database
         const result = await pool.query(
-            'INSERT INTO Users (name, password) VALUES ($1, $2) RETURNING *',
-            [username, password]
+            'INSERT INTO Users (name, email, password) VALUES ($1, $2, $3) RETURNING *',
+            [name, email, password]
         );
 
         const newUser = result.rows[0];
