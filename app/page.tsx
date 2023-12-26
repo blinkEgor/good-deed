@@ -15,7 +15,7 @@ export default function Page() {
           <p className={`${lusitana.className} text-xl text-white md:text-3xl md:leading-normal`}>
             <strong>Welcome to Good Deed application.</strong> Here you can write your list of good deeds.
           </p>
-          <div className='flex gap-5'>
+          <div className='flex gap-5 flex-wrap'>
             <Link
               href="/login"
               className="flex items-center gap-5 self-start rounded-lg bg-blue-600 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-blue-400 md:text-base"
