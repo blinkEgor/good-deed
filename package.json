@@ -2,12 +2,13 @@
   "private": true,
   "scripts": {
     "build": "next build",
-    "dev": "next dev",
+    "dev": "ts-node server.ts",
     "prettier": "prettier --write --ignore-unknown .",
     "prettier:check": "prettier --check --ignore-unknown .",
     "start": "next start",
     "seed": "node -r dotenv/config ./scripts/seed.js",
-    "lint": "next lint"
+    "lint": "next lint",
+    "start-server": "node ./dist/server.js"
   },
   "dependencies": {
     "@heroicons/react": "^2.0.18",
