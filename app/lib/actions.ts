@@ -6,7 +6,7 @@ import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { signIn } from '@/auth';
 import { AuthError } from 'next-auth';
-import { addUser } from '@/auth';
+// import { addUser } from '@/auth';
 
 
 const FormSchema = z.object({
@@ -137,10 +137,23 @@ export async function registration(
   prevState: string | undefined,
   formData: FormData,
 ) {
+  const UserSchema = z.object({
+    name: z.string(),
+    email: z.string(),
+    password: z.string(),
+  });
+  
+  const CreateUser = UserSchema.omit({ name: true, email: true, password: true });
+
+  const validatedFields = CreateUser.safeParse({
+    name: formData.get('name'),
+    email: formData.get('email'),
+    password: formData.get('password'),
+  });
+
   try {
     console.log('registration success!');
-    console.log(formData);
-    await addUser('name', 'email', 'password', formData)
+    console.log(validatedFields);
   } catch (error) {
     console.log('comething wrong!!!');
     throw error;
