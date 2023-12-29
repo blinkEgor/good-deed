@@ -5,24 +5,27 @@ import {
   AtSymbolIcon,
   KeyIcon,
   UserCircleIcon,
-//   ExclamationCircleIcon,
 } from '@heroicons/react/24/outline';
 import { ArrowRightIcon } from '@heroicons/react/20/solid';
 import { Button } from './button';
 import { useFormState, useFormStatus } from 'react-dom';
-// import { register } from 'module';
-// import { registration } from '@/app/lib/actions';
-// import { authenticate } from '@/app/lib/actions';
-// import handler from '@/app/api/register';
 import { registration } from '@/app/lib/actions';
 
-export default function RegisterForm() {
-    // const [errorMessage, dispatch] = useFormState(registration, undefined);
-    // const [errorMessage, dispatch] = useFormState(handler, undefined);
-    // const [,dispatch] = useFormState(registration, undefined);
+function RegisterButton() {
+    const { pending } = useFormStatus();
 
     return (
-        <form action={''} className="space-y-3">
+        <Button className="mt-4 w-full" type="submit" aria-disabled={pending}>
+            Register <ArrowRightIcon className="ml-auto h-5 w-5 text-gray-50" />
+        </Button>
+    );
+}
+
+export default function RegisterForm() {
+    const [state, formAction] = useFormState(registration, undefined);
+
+    return (
+        <form action={formAction} className="space-y-3">
             <div className="flex-1 rounded-lg bg-gray-600 text-gray-100 px-6 pb-4 pt-8">
                 <h1 className={`${lusitana.className} mb-3 text-2xl`}>
                     Please registration to application.
@@ -40,7 +43,7 @@ export default function RegisterForm() {
                             <input
                                 className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-200 bg-gray-600"
                                 id="name"
-                                type="name"
+                                type="text"
                                 name="name"
                                 placeholder="Enter your username"
                                 required
@@ -105,15 +108,5 @@ export default function RegisterForm() {
                 </div>
             </div>
         </form>
-    );
-}
-
-function RegisterButton() {
-    const { pending } = useFormStatus();
-   
-    return (
-        <Button className="mt-4 w-full" aria-disabled={pending}>
-            Register <ArrowRightIcon className="ml-auto h-5 w-5 text-gray-50" />
-        </Button>
     );
 }
