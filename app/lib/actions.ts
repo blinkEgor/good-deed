@@ -131,11 +131,17 @@ export async function authenticate(
   }
 }
 
-export async function registration() {
+export async function registration(
+  previousState:any,
+  formData:FormData,
+) {
   try {
     console.log('registration success!');
+    console.log(formData);
   } catch (error) {
     console.log('comething wrong!!!');
     throw error;
   }
+  revalidatePath('/');
+  redirect('/');
 }

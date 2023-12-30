@@ -15,15 +15,14 @@ function RegisterButton() {
     const { pending } = useFormStatus();
 
     return (
-        <Button className="mt-4 w-full" type="submit" aria-disabled={pending}>
+        <Button className="mt-4 w-full" type="submit" disabled={pending}>
             Register <ArrowRightIcon className="ml-auto h-5 w-5 text-gray-50" />
         </Button>
     );
 }
 
 export default function RegisterForm() {
-    const [state, formAction] = useFormState(registration, undefined);
-
+    const [state, formAction] = useFormState(registration, null);
     return (
         <form action={formAction} className="space-y-3">
             <div className="flex-1 rounded-lg bg-gray-600 text-gray-100 px-6 pb-4 pt-8">
