@@ -6,6 +6,7 @@ import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { signIn } from '@/auth';
 import { AuthError } from 'next-auth';
+import { randomUUID } from 'crypto';
 
 const FormSchema = z.object({
   id: z.string(),
@@ -135,9 +136,47 @@ export async function registration(
   previousState:any,
   formData:FormData,
 ) {
+  const id = randomUUID();
+
+  const UserFormSchema = z.object({
+    name: z.string({
+      invalid_type_error: 'Please enter your username.',
+    }),
+    email: z.string({
+      invalid_type_error: 'Please enter your email.',
+    }),
+    password: z.string({
+      invalid_type_error: 'Please create your password.',
+    }),
+    id: z.string(),
+  });
+
+  const RegisterUser = UserFormSchema.omit({ id: true });
+
+  type UserSatte = {
+    errors?: {
+      name?: string[];
+      email?: string[];
+      password?: string[];
+    };
+    message?: string | null;
+  };
+
+  const validatedFields = RegisterUser.safeParse({
+    name: formData.get('customerId'),
+    email: formData.get('eamil'),
+    password: formData.get('password'),
+  });
+
+  // const { name, email, password } = validatedFields.data;
+
   try {
     console.log('registration success!');
-    console.log(formData);
+
+    // await sql`
+    //   INSERT INTO Users (name, email, password, id)
+    //   VALUES (${name}, ${email}, ${password}, ${id})
+    // `;
   } catch (error) {
     console.log('comething wrong!!!');
     throw error;
