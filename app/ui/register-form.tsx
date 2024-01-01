@@ -42,7 +42,7 @@ export default function RegisterForm() {
                             <input
                                 className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-200 bg-gray-600"
                                 id="name"
-                                type="text"
+                                type="name"
                                 name="name"
                                 placeholder="Enter your username"
                                 required

@@ -133,50 +133,68 @@ export async function authenticate(
 }
 
 export async function registration(
-  previousState:any,
-  formData:FormData,
+  previousState: any,
+  formData: FormData,
 ) {
-  const id = randomUUID();
-
-  const UserFormSchema = z.object({
-    name: z.string({
-      invalid_type_error: 'Please enter your username.',
-    }),
-    email: z.string({
-      invalid_type_error: 'Please enter your email.',
-    }),
-    password: z.string({
-      invalid_type_error: 'Please create your password.',
-    }),
-    id: z.string(),
-  });
-
-  const RegisterUser = UserFormSchema.omit({ id: true });
-
-  type UserSatte = {
-    errors?: {
-      name?: string[];
-      email?: string[];
-      password?: string[];
-    };
-    message?: string | null;
+  type User = {
+    id: string,
+    name: string,
+    email: string,
+    password: string,
   };
 
-  const validatedFields = RegisterUser.safeParse({
-    name: formData.get('customerId'),
-    email: formData.get('eamil'),
+  const user = {
+    id: randomUUID(),
+    name: formData.get('name'),
+    email: formData.get('email'),
     password: formData.get('password'),
-  });
+  };
+  const { id, name, email, password } = <User>user;
+
+  // const id = randomUUID();
+  // const name = formData.get('name');
+  // const email = formData.get('email');
+  // const password = formData.get('password');
+
+  // const UserFormSchema = z.object({
+  //   name: z.string({
+  //     invalid_type_error: 'Please enter your username.',
+  //   }),
+  //   email: z.string({
+  //     invalid_type_error: 'Please enter your email.',
+  //   }),
+  //   password: z.string({
+  //     invalid_type_error: 'Please create your password.',
+  //   }),
+  //   id: z.string(),
+  // });
+
+  // const RegisterUser = UserFormSchema.omit({ id: true });
+
+  // type UserSatte = {
+  //   errors?: {
+  //     name?: string[];
+  //     email?: string[];
+  //     password?: string[];
+  //   };
+  //   message?: string | null;
+  // };
+
+  // const validatedFields = RegisterUser.safeParse({
+  //   name: formData.get('customerId'),
+  //   email: formData.get('eamil'),
+  //   password: formData.get('password'),
+  // });
 
   // const { name, email, password } = validatedFields.data;
 
   try {
     console.log('registration success!');
 
-    // await sql`
-    //   INSERT INTO Users (name, email, password, id)
-    //   VALUES (${name}, ${email}, ${password}, ${id})
-    // `;
+    await sql`
+      INSERT INTO Users (id, name, email, password)
+      VALUES (${id}, ${name}, ${email}, ${password})
+    `;
   } catch (error) {
     console.log('comething wrong!!!');
     throw error;
