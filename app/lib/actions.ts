@@ -7,6 +7,7 @@ import { redirect } from 'next/navigation';
 import { signIn } from '@/auth';
 import { AuthError } from 'next-auth';
 import { randomUUID } from 'crypto';
+import * as bcrypt from 'bcrypt';
 
 const FormSchema = z.object({
   id: z.string(),
@@ -151,49 +152,18 @@ export async function registration(
   };
   const { id, name, email, password } = <User>user;
 
-  // const id = randomUUID();
-  // const name = formData.get('name');
-  // const email = formData.get('email');
-  // const password = formData.get('password');
-
-  // const UserFormSchema = z.object({
-  //   name: z.string({
-  //     invalid_type_error: 'Please enter your username.',
-  //   }),
-  //   email: z.string({
-  //     invalid_type_error: 'Please enter your email.',
-  //   }),
-  //   password: z.string({
-  //     invalid_type_error: 'Please create your password.',
-  //   }),
-  //   id: z.string(),
-  // });
-
-  // const RegisterUser = UserFormSchema.omit({ id: true });
-
-  // type UserSatte = {
-  //   errors?: {
-  //     name?: string[];
-  //     email?: string[];
-  //     password?: string[];
-  //   };
-  //   message?: string | null;
-  // };
-
-  // const validatedFields = RegisterUser.safeParse({
-  //   name: formData.get('customerId'),
-  //   email: formData.get('eamil'),
-  //   password: formData.get('password'),
-  // });
-
-  // const { name, email, password } = validatedFields.data;
+  const saltRounds = 10;
+  const myPlaintextPassword = password;
 
   try {
     console.log('registration success!');
 
+    const salt = await bcrypt.genSalt(saltRounds);
+    const hash = await bcrypt.hash(myPlaintextPassword, salt);
+
     await sql`
       INSERT INTO Users (id, name, email, password)
-      VALUES (${id}, ${name}, ${email}, ${password})
+      VALUES (${id}, ${name}, ${email}, ${hash})
     `;
   } catch (error) {
     console.log('comething wrong!!!');

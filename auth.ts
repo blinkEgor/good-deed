@@ -5,7 +5,6 @@ import { z } from 'zod';
 import { sql } from '@vercel/postgres';
 import type { User } from '@/app/lib/definitions';
 import bcrypt from 'bcrypt';
-// import { randomUUID } from 'crypto';
  
 async function getUser(email: string): Promise<User | undefined> {
   try {
@@ -41,44 +40,3 @@ export const { auth, signIn, signOut } = NextAuth({
     }),
   ],
 });
-
-// export async function addUser(
-//   name: string,
-//   email: string,
-//   password: string,
-//   formData: FormData,
-//   ): Promise<User | undefined> {
-
-//   const FormSchema = z.object({
-//     id: z.string(),
-//     name: z.string({
-//       invalid_type_error: 'Please enter your name.',
-//     }),
-//     email: z.string({
-//       invalid_type_error: 'Please enter your email.',
-//     }),
-//     password: z.string({
-//       invalid_type_error: 'Please enter your password.',
-//     }),
-//   });
-
-//   const id = randomUUID();
-//   const AddUser = FormSchema.omit({ id: true });
-
-//   const validatedFields = AddUser.safeParse({
-//     name: formData.get('name'),
-//     email: formData.get('email'),
-//     password: formData.get('password'),
-//   });
-  
-//   try {
-//     const add_user = await sql<User>`
-//       INSERT INTO Users (id, name, email, password)
-//       VALUES (${id}, ${name}, ${email}, ${password})
-//     `;
-//     return add_user.rows[0];
-//   } catch (error) {
-//     console.error('Failed to fetch user:', error);
-//     throw new Error('Failed to fetch user.');
-//   }
-// }
