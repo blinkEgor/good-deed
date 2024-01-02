@@ -6,28 +6,27 @@ import {
   GoodDeedsTable,
   LatestGoodDeedRaw,
   User,
-  Revenue,
+  // Revenue,
 } from './definitions';
-// import { formatCurrency } from './utils';
 import { unstable_noStore as noStore } from 'next/cache';
 
-export async function fetchRevenue() {
-  noStore();
+// export async function fetchRevenue() {
+//   noStore();
 
-  try {
-    console.log('Fetching revenue data...');
-    await new Promise((resolve) => setTimeout(resolve, 3000));
+//   try {
+//     console.log('Fetching revenue data...');
+//     await new Promise((resolve) => setTimeout(resolve, 3000));
 
-    const data = await sql<Revenue>`SELECT * FROM revenue`;
+//     const data = await sql<Revenue>`SELECT * FROM revenue`;
 
-    console.log('Data fetch complete after 3 seconds.');
+//     console.log('Data fetch complete after 3 seconds.');
 
-    return data.rows;
-  } catch (error) {
-    console.error('Database Error:', error);
-    throw new Error('Failed to fetch revenue data.');
-  }
-}
+//     return data.rows;
+//   } catch (error) {
+//     console.error('Database Error:', error);
+//     throw new Error('Failed to fetch revenue data.');
+//   }
+// }
 
 export async function fetchLatestGoodDeeds() {
   noStore();
@@ -42,7 +41,6 @@ export async function fetchLatestGoodDeeds() {
 
     const latestGoodDeeds = data.rows.map((deed) => ({
       ...deed,
-      // amount: formatCurrency(good_deed.amount),
     }));
     return latestGoodDeeds;
   } catch (error) {
