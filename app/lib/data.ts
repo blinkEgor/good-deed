@@ -2,6 +2,7 @@ import { sql } from '@vercel/postgres';
 import {
   UserField,
   FriendsTable,
+  CustomerField,
   GoodDeedForm,
   GoodDeedsTable,
   LatestGoodDeedRaw,
@@ -166,6 +167,26 @@ export async function fetchGoodDeedById(id: string) {
   }
 }
 
+export async function fetchCustomers() {
+  noStore();
+  
+  try {
+    const data = await sql<CustomerField>`
+      SELECT
+        id,
+        name
+      FROM customers
+      ORDER BY name ASC
+    `;
+
+    const customers = data.rows;
+    return customers;
+  } catch (err) {
+    console.error('Database Error:', err);
+    throw new Error('Failed to fetch all customers.');
+  }
+}
+
 export async function fetchUsers() {
   noStore();
   
@@ -186,34 +207,66 @@ export async function fetchUsers() {
   }
 }
 
-export async function fetchFilteredUsers(query: string) {
+export async function fetchFilteredCustomers(query: string) {
   noStore();
   
   try {
-    const data = await sql<User>`
+    const data = await sql<FriendsTable>`
 		SELECT
-		  Users.id,
-		  Users.name,
+		  customers.id,
+		  customers.name,
+		  customers.email,
+		  customers.image_url,
+		  COUNT(good_deeds.id) AS total_good_deeds,
+		FROM customers
+		LEFT JOIN good_deeds ON customers.id = good_deeds.customer_id
 
-		FROM Users
-		LEFT JOIN good_deeds ON Users.id = good_deeds.user_id
 		WHERE
-		  Users.name ILIKE ${`%${query}%`} OR
-        Users.email ILIKE ${`%${query}%`}
-		GROUP BY Users.id, Users.name
-		ORDER BY Users.name ASC
+      customers.name ILIKE ${`%${query}%`} OR
+      customers.email ILIKE ${`%${query}%`}
+      GROUP BY customers.id, customers.name, customers.email, customers.image_url
+      ORDER BY customers.name ASC
 	  `;
 
-    const users = data.rows.map((user) => ({
-      ...user,
+    const customers = data.rows.map((customer) => ({
+      ...customer,
     }));
 
-    return users;
+    return customers;
   } catch (err) {
     console.error('Database Error:', err);
     throw new Error('Failed to fetch customer table.');
   }
 }
+
+// export async function fetchFilteredUsers(query: string) {
+//   noStore();
+  
+//   try {
+//     const data = await sql<User>`
+// 		SELECT
+// 		  Users.id,
+// 		  Users.name,
+
+// 		FROM Users
+// 		LEFT JOIN good_deeds ON Users.id = good_deeds.user_id
+// 		WHERE
+// 		  Users.name ILIKE ${`%${query}%`} OR
+//         Users.email ILIKE ${`%${query}%`}
+// 		GROUP BY Users.id, Users.name
+// 		ORDER BY Users.name ASC
+// 	  `;
+
+//     const users = data.rows.map((user) => ({
+//       ...user,
+//     }));
+
+//     return users;
+//   } catch (err) {
+//     console.error('Database Error:', err);
+//     throw new Error('Failed to fetch customer table.');
+//   }
+// }
 
 export async function getUser(email: string) {
   noStore();

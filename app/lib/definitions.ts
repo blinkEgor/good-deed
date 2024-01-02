@@ -75,6 +75,11 @@ export type UserField = {
   name: string;
 };
 
+export type CustomerField = {
+  id: string;
+  name: string;
+};
+
 export type GoodDeedForm = {
   id: string;
   customer_id: string;
