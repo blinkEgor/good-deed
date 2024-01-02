@@ -1,6 +1,6 @@
 import { sql } from '@vercel/postgres';
 import {
-  CustomerField,
+  UserField,
   FriendsTable,
   GoodDeedForm,
   GoodDeedsTable,
@@ -166,54 +166,49 @@ export async function fetchGoodDeedById(id: string) {
   }
 }
 
-export async function fetchCustomers() {
+export async function fetchUsers() {
   noStore();
   
   try {
-    const data = await sql<CustomerField>`
+    const data = await sql<UserField>`
       SELECT
         id,
         name
-      FROM customers
+      FROM Users
       ORDER BY name ASC
     `;
 
-    const customers = data.rows;
-    return customers;
+    const users = data.rows;
+    return users;
   } catch (err) {
     console.error('Database Error:', err);
     throw new Error('Failed to fetch all customers.');
   }
 }
 
-export async function fetchFilteredCustomers(query: string) {
+export async function fetchFilteredUsers(query: string) {
   noStore();
   
   try {
-    const data = await sql<FriendsTable>`
+    const data = await sql<User>`
 		SELECT
-		  customers.id,
-		  customers.name,
-		  customers.email,
-		  customers.image_url,
-		  COUNT(good_deeds.id) AS total_good_deeds,
+		  Users.id,
+		  Users.name,
 
-		FROM customers
-		LEFT JOIN good_deeds ON customers.id = good_deeds.customer_id
+		FROM Users
+		LEFT JOIN good_deeds ON Users.id = good_deeds.user_id
 		WHERE
-		  customers.name ILIKE ${`%${query}%`} OR
-        customers.email ILIKE ${`%${query}%`}
-		GROUP BY customers.id, customers.name, customers.email, customers.image_url
-		ORDER BY customers.name ASC
+		  Users.name ILIKE ${`%${query}%`} OR
+        Users.email ILIKE ${`%${query}%`}
+		GROUP BY Users.id, Users.name
+		ORDER BY Users.name ASC
 	  `;
 
-    const customers = data.rows.map((customer) => ({
-      ...customer,
-      // total_doing: formatCurrency(customer.total_doing),
-      // total_done: formatCurrency(customer.total_done),
+    const users = data.rows.map((user) => ({
+      ...user,
     }));
 
-    return customers;
+    return users;
   } catch (err) {
     console.error('Database Error:', err);
     throw new Error('Failed to fetch customer table.');

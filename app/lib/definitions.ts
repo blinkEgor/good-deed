@@ -70,7 +70,7 @@ export type FormattedFriendsTable = {
   total_done: string;
 };
 
-export type CustomerField = {
+export type UserField = {
   id: string;
   name: string;
 };
