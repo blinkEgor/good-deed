@@ -1,5 +1,6 @@
 'use server';
 
+import { User } from '@/app/lib/definitions';
 import { z } from 'zod';
 import { sql } from '@vercel/postgres';
 import { revalidatePath } from 'next/cache';
@@ -137,12 +138,12 @@ export async function registration(
   previousState: any,
   formData: FormData,
 ) {
-  type User = {
-    id: string,
-    name: string,
-    email: string,
-    password: string,
-  };
+  // type User = {
+  //   id: string,
+  //   name: string,
+  //   email: string,
+  //   password: string,
+  // };
 
   const user = {
     id: randomUUID(),
