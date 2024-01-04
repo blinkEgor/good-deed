@@ -1,6 +1,6 @@
 import Form from '@/app/ui/good-deeds/edit-form';
 import Breadcrumbs from '@/app/ui/good-deeds/breadcrumbs';
-import { fetchGoodDeedById, fetchCustomers } from '@/app/lib/data';
+import { fetchGoodDeedById, fetchUsers } from '@/app/lib/data';
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
  
@@ -10,9 +10,9 @@ export const metadata: Metadata = {
 
 export default async function Page({ params }: { params: { id: string } }) {
     const id = params.id;
-    const [goodDeed, customers] = await Promise.all([
+    const [goodDeed, users] = await Promise.all([
         fetchGoodDeedById(id),
-        fetchCustomers(),
+        fetchUsers(),
     ]);
 
     if(!goodDeed) {
@@ -31,7 +31,7 @@ export default async function Page({ params }: { params: { id: string } }) {
                     },
                 ]}
             />
-            <Form good_deed={goodDeed} customers={customers} />
+            <Form good_deed={goodDeed} customers={users} />
         </main>
     );
 }
