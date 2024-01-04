@@ -41,6 +41,11 @@ export default async function UsersTable({
                   <div className='text-gray-100'>
                     <p>{user.deed}</p>
                   </div>
+                  <div className='flex flex-col items-center'>
+                    <div className='text-gray-300 mt-3 text-xs'>
+                        <p>{formatDateToLocal(user.date)}</p>
+                    </div>
+                  </div>
                 </div>
               </div>
             ))}
@@ -53,6 +58,9 @@ export default async function UsersTable({
                 </th>
                 <th scope="col" className="px-3 py-5 font-medium">
                   Deed
+                </th>
+                <th scope="col" className="px-3 py-5 font-medium">
+                  Date
                 </th>
                 <th scope="col" className="px-3 py-5 font-medium">
                   Subscribe
@@ -82,6 +90,9 @@ export default async function UsersTable({
                   </td>
                   <td className='whitespace-wrap px-3 py-3'>
                     {user.deed}
+                  </td>
+                  <td className="whitespace-nowrap px-3 py-3">
+                    {formatDateToLocal(user.date)}
                   </td>
                 </tr>
               ))}
