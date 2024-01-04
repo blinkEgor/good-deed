@@ -1,6 +1,6 @@
 import Form from '@/app/ui/good-deeds/create-form';
 import Breadcrumbs from '@/app/ui/good-deeds/breadcrumbs';
-import { fetchCustomers } from '@/app/lib/data';
+import { fetchUsers } from '@/app/lib/data';
 import { Metadata } from 'next';
  
 export const metadata: Metadata = {
@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 };
  
 export default async function Page() {
-  const customers = await fetchCustomers();
+  const users = await fetchUsers();
  
   return (
     <main>
@@ -22,7 +22,7 @@ export default async function Page() {
           },
         ]}
       />
-      <Form customers={customers} />
+      <Form users={users} />
     </main>
   );
 }

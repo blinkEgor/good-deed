@@ -2,7 +2,7 @@ import { sql } from '@vercel/postgres';
 import {
   UserField,
   FriendsTable,
-  CustomerField,
+  // CustomerField,
   GoodDeedForm,
   GoodDeedsTable,
   LatestGoodDeedRaw,
@@ -34,9 +34,9 @@ export async function fetchLatestGoodDeeds() {
   
   try {
     const data = await sql<LatestGoodDeedRaw>`
-      SELECT customers.name, customers.image_url, customers.email, good_deeds.id
+      SELECT users.name, users.email, good_deeds.id
       FROM good_deeds
-      JOIN customers ON good_deeds.customer_id = customers.id
+      JOIN users ON good_deeds.user_id = users.id
       ORDER BY good_deeds.date DESC
       LIMIT 5`;
 
@@ -55,7 +55,7 @@ export async function fetchCardData() {
   
   try {
     const goodDeedCountPromise = sql`SELECT COUNT(*) FROM good_deeds`;
-    const customerCountPromise = sql`SELECT COUNT(*) FROM customers`;
+    const customerCountPromise = sql`SELECT COUNT(*) FROM users`;
     // const goodDeedStatusPromise = sql`SELECT
     //      SUM(CASE WHEN status = 'done' THEN amount ELSE 0 END) AS "done",
     //      SUM(CASE WHEN status = 'doing' THEN amount ELSE 0 END) AS "doing"
@@ -100,12 +100,11 @@ export async function fetchFilteredGoodDeeds(
         good_deeds.deed,
         good_deeds.date,
         good_deeds.status,
-        customers.name,
-        customers.image_url
+        users.name
       FROM good_deeds
-      JOIN customers ON good_deeds.customer_id = customers.id
+      JOIN users ON good_deeds.user_id = users.id
       WHERE
-        customers.name ILIKE ${`%${query}%`} OR
+        users.name ILIKE ${`%${query}%`} OR
         good_deeds.deed::text ILIKE ${`%${query}%`} OR
         good_deeds.date::text ILIKE ${`%${query}%`} OR
         good_deeds.status ILIKE ${`%${query}%`}
@@ -126,9 +125,9 @@ export async function fetchGoodDeedsPages(query: string) {
   try {
     const count = await sql`SELECT COUNT(*)
     FROM good_deeds
-    JOIN customers ON good_deeds.customer_id = customers.id
+    JOIN users ON good_deeds.user_id = users.id
     WHERE
-      customers.name ILIKE ${`%${query}%`} OR
+      users.name ILIKE ${`%${query}%`} OR
       good_deeds.deed::text ILIKE ${`%${query}%`} OR
       good_deeds.date::text ILIKE ${`%${query}%`} OR
       good_deeds.status ILIKE ${`%${query}%`}
@@ -149,7 +148,7 @@ export async function fetchGoodDeedById(id: string) {
     const data = await sql<GoodDeedForm>`
       SELECT
         good_deeds.id,
-        good_deeds.customer_id,
+        good_deeds.user_id,
         good_deeds.deed,
         good_deeds.status
       FROM good_deeds
@@ -167,25 +166,25 @@ export async function fetchGoodDeedById(id: string) {
   }
 }
 
-export async function fetchCustomers() {
-  noStore();
+// export async function fetchCustomers() {
+//   noStore();
   
-  try {
-    const data = await sql<CustomerField>`
-      SELECT
-        id,
-        name
-      FROM customers
-      ORDER BY name ASC
-    `;
+//   try {
+//     const data = await sql<CustomerField>`
+//       SELECT
+//         id,
+//         name
+//       FROM customers
+//       ORDER BY name ASC
+//     `;
 
-    const customers = data.rows;
-    return customers;
-  } catch (err) {
-    console.error('Database Error:', err);
-    throw new Error('Failed to fetch all customers.');
-  }
-}
+//     const customers = data.rows;
+//     return customers;
+//   } catch (err) {
+//     console.error('Database Error:', err);
+//     throw new Error('Failed to fetch all customers.');
+//   }
+// }
 
 export async function fetchUsers() {
   noStore();
@@ -195,7 +194,7 @@ export async function fetchUsers() {
       SELECT
         id,
         name
-      FROM Users
+      FROM users
       ORDER BY name ASC
     `;
 
@@ -239,34 +238,34 @@ export async function fetchFilteredCustomers(query: string) {
   }
 }
 
-// export async function fetchFilteredUsers(query: string) {
-//   noStore();
+export async function fetchFilteredUsers(query: string) {
+  noStore();
   
-//   try {
-//     const data = await sql<User>`
-// 		SELECT
-// 		  Users.id,
-// 		  Users.name,
+  try {
+    const data = await sql<User>`
+		SELECT
+		  users.id,
+		  users.name,
 
-// 		FROM Users
-// 		LEFT JOIN good_deeds ON Users.id = good_deeds.user_id
-// 		WHERE
-// 		  Users.name ILIKE ${`%${query}%`} OR
-//         Users.email ILIKE ${`%${query}%`}
-// 		GROUP BY Users.id, Users.name
-// 		ORDER BY Users.name ASC
-// 	  `;
+		FROM users
+		LEFT JOIN good_deeds ON users.id = good_deeds.user_id
+		WHERE
+		  users.name ILIKE ${`%${query}%`} OR
+        users.email ILIKE ${`%${query}%`}
+		GROUP BY users.id, users.name
+		ORDER BY users.name ASC
+	  `;
 
-//     const users = data.rows.map((user) => ({
-//       ...user,
-//     }));
+    const users = data.rows.map((user) => ({
+      ...user,
+    }));
 
-//     return users;
-//   } catch (err) {
-//     console.error('Database Error:', err);
-//     throw new Error('Failed to fetch customer table.');
-//   }
-// }
+    return users;
+  } catch (err) {
+    console.error('Database Error:', err);
+    throw new Error('Failed to fetch customer table.');
+  }
+}
 
 export async function getUser(email: string) {
   noStore();

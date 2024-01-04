@@ -12,7 +12,7 @@ import * as bcrypt from 'bcrypt';
 
 const FormSchema = z.object({
   id: z.string(),
-  customerId: z.string({
+  userId: z.string({
     invalid_type_error: 'Please select a customer.',
   }),
   deed: z.string({
@@ -29,7 +29,7 @@ const UpdateGoodDeed = FormSchema.omit({ id: true, date: true });
 
 export type State = {
   errors?: {
-    customerId?: string[];
+    userId?: string[];
     deed?: string[];
     status?: string[];
   };
@@ -38,7 +38,7 @@ export type State = {
 
 export async function createGoodDeed(prevState: State, formData: FormData) {
   const validatedFields = CreateGoodDeed.safeParse({
-    customerId: formData.get('customerId'),
+    userId: formData.get('userId'),
     deed: formData.get('deed'),
     status: formData.get('status'),
   });
@@ -50,14 +50,14 @@ export async function createGoodDeed(prevState: State, formData: FormData) {
     };
   }
  
-  const { customerId, deed, status } = validatedFields.data;
+  const { userId, deed, status } = validatedFields.data;
 
   const date = new Date().toISOString().split('T')[0];
  
   try {
     await sql`
-      INSERT INTO good_deeds (customer_id, deed, status, date)
-      VALUES (${customerId}, ${deed}, ${status}, ${date})
+      INSERT INTO good_deeds (user_id, deed, status, date)
+      VALUES (${userId}, ${deed}, ${status}, ${date})
     `;
   } catch (error) {
     return {
@@ -75,8 +75,8 @@ export async function updateGoodDeed(
   formData: FormData,
 ) {
   const validatedFields = UpdateGoodDeed.safeParse({
-    customerId: formData.get('customerId'),
-    amount: formData.get('amount'),
+    userId: formData.get('userId'),
+    // amount: formData.get('amount'),
     deed: formData.get('deed'),
     status: formData.get('status'),
   });
@@ -88,12 +88,12 @@ export async function updateGoodDeed(
     };
   }
  
-  const { customerId, deed, status } = validatedFields.data;
+  const { userId, deed, status } = validatedFields.data;
  
   try {
     await sql`
       UPDATE good_deeds
-      SET customer_id = ${customerId}, deed = ${deed}, status = ${status}
+      SET user_id = ${userId}, deed = ${deed}, status = ${status}
       WHERE id = ${id}
     `;
   } catch (error) {
@@ -163,7 +163,7 @@ export async function registration(
     const hash = await bcrypt.hash(myPlaintextPassword, salt);
 
     await sql`
-      INSERT INTO Users (id, name, email, password)
+      INSERT INTO users (id, name, email, password)
       VALUES (${id}, ${name}, ${email}, ${hash})
     `;
   } catch (error) {
