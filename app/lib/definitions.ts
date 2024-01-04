@@ -83,6 +83,7 @@ export type CustomerField = {
 export type GoodDeedForm = {
   id: string;
   customer_id: string;
+  user_id: string;
   // amount: number;
   deed: string;
   status: 'doing' | 'done';

@@ -31,7 +31,7 @@ export default async function Page({ params }: { params: { id: string } }) {
                     },
                 ]}
             />
-            <Form good_deed={goodDeed} customers={users} />
+            <Form good_deed={goodDeed} users={users} />
         </main>
     );
 }

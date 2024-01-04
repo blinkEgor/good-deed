@@ -1,6 +1,6 @@
 'use client';
 
-import { CustomerField, GoodDeedForm } from '@/app/lib/definitions';
+import { UserField, GoodDeedForm } from '@/app/lib/definitions';
 import {
   CheckIcon,
   ClockIcon,
@@ -14,10 +14,10 @@ import { useFormState } from 'react-dom';
 
 export default function EditGoodDeedForm({
   good_deed,
-  customers,
+  users,
 }: {
   good_deed: GoodDeedForm;
-  customers: CustomerField[];
+  users: UserField[];
 }) {
   const initialState = { message: null, errors: {} };
   const updateGoodDeedWithId = updateGoodDeed.bind(null, good_deed.id);
@@ -26,32 +26,32 @@ export default function EditGoodDeedForm({
   return (
     <form action={dispatch}>
       <div className="rounded-md bg-gray-700 text-gray-100 p-4 md:p-6">
-        {/* Customer Name */}
+        {/* User Name */}
         <div className="mb-4">
-          <label htmlFor="customer" className="mb-2 block text-sm font-medium">
-            Choose customer
+          <label htmlFor="user" className="mb-2 block text-sm font-medium">
+            Choose user
           </label>
           <div className="relative">
             <select
-              id="customer"
-              name="customerId"
+              id="user"
+              name="userId"
               className="peer block w-full cursor-pointer rounded-md border border-gray-500 py-2 pl-10 text-sm outline-2 placeholder:text-gray-200 bg-gray-600"
-              defaultValue={good_deed.customer_id}
+              defaultValue={good_deed.user_id}
             >
               <option value="" disabled>
-                Select a customer
+                Select a user
               </option>
-              {customers.map((customer) => (
-                <option key={customer.id} value={customer.id}>
-                  {customer.name}
+              {users.map((user) => (
+                <option key={user.id} value={user.id}>
+                  {user.name}
                 </option>
               ))}
             </select>
             <UserCircleIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-200" />
           </div>
-          <div id="customer-error" aria-live="polite" aria-atomic="true">
-            {state.errors?.customerId &&
-              state.errors.customerId.map((error: string) => (
+          <div id="user-error" aria-live="polite" aria-atomic="true">
+            {state.errors?.userId &&
+              state.errors.userId.map((error: string) => (
               <p className="mt-2 text-sm text-red-500" key={error}>
                 {error}
               </p>
