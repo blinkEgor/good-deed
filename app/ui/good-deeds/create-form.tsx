@@ -19,10 +19,10 @@ export default function Form({ users }: { users: UserField[] }) {
   return (
     <form action={dispatch}>
       <div className="rounded-md bg-gray-700 text-gray-200 p-4 md:p-6">
-        {/* Customer Name */}
+        {/* User Name */}
         <div className="mb-4">
           <label htmlFor="customer" className="mb-2 block text-sm font-medium">
-            Choose user
+            User
           </label>
           <div className="relative">
             <select

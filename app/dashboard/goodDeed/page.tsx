@@ -37,12 +37,12 @@ export default async function Page({
         <Search placeholder="Search good deeds..." />
         <CreateGoodDeed />
       </div>
-       <Suspense key={query + currentPage} fallback={<GoodDeedsTableSkeleton />}>
+      <Suspense key={query + currentPage} fallback={<GoodDeedsTableSkeleton />}>
         <GoodDeedsTable query={query} currentPage={currentPage} />
       </Suspense>
       <div className="mt-5 flex justify-end">
-          <Pagination totalPages={totalPages} />
-        </div>
+        <Pagination totalPages={totalPages} />
+      </div>
     </div>
     );
 }

@@ -3,6 +3,7 @@ import {
   UserField,
   FriendsTable,
   // CustomerField,
+  GoodDeedsCountUsers,
   GoodDeedForm,
   GoodDeedsTable,
   LatestGoodDeedRaw,
@@ -34,7 +35,7 @@ export async function fetchLatestGoodDeeds() {
   
   try {
     const data = await sql<LatestGoodDeedRaw>`
-      SELECT users.name, users.email, good_deeds.id
+      SELECT users.name, good_deeds.id
       FROM good_deeds
       JOIN users ON good_deeds.user_id = users.id
       ORDER BY good_deeds.date DESC
@@ -55,7 +56,7 @@ export async function fetchCardData() {
   
   try {
     const goodDeedCountPromise = sql`SELECT COUNT(*) FROM good_deeds`;
-    const customerCountPromise = sql`SELECT COUNT(*) FROM users`;
+    const userCountPromise = sql`SELECT COUNT(*) FROM users`;
     // const goodDeedStatusPromise = sql`SELECT
     //      SUM(CASE WHEN status = 'done' THEN amount ELSE 0 END) AS "done",
     //      SUM(CASE WHEN status = 'doing' THEN amount ELSE 0 END) AS "doing"
@@ -63,17 +64,17 @@ export async function fetchCardData() {
 
     const data = await Promise.all([
       goodDeedCountPromise,
-      customerCountPromise,
+      userCountPromise,
       // goodDeedStatusPromise,
     ]);
 
     const numberOfGoodDeeds = Number(data[0].rows[0].count ?? '0');
-    const numberOfCustomers = Number(data[1].rows[0].count ?? '0');
+    const numberOfUsers = Number(data[1].rows[0].count ?? '0');
     // const totalDoneGoodDeeds = formatCurrency(data[2].rows[0].done ?? '0');
     // const totalDoingGoodDeeds = formatCurrency(data[2].rows[0].doing ?? '0');
 
     return {
-      numberOfCustomers,
+      numberOfUsers,
       numberOfGoodDeeds,
       // totalDoneGoodDeeds,
       // totalDoingGoodDeeds,
@@ -123,15 +124,16 @@ export async function fetchGoodDeedsPages(query: string) {
   noStore();
   
   try {
-    const count = await sql`SELECT COUNT(*)
-    FROM good_deeds
-    JOIN users ON good_deeds.user_id = users.id
-    WHERE
-      users.name ILIKE ${`%${query}%`} OR
-      good_deeds.deed::text ILIKE ${`%${query}%`} OR
-      good_deeds.date::text ILIKE ${`%${query}%`} OR
-      good_deeds.status ILIKE ${`%${query}%`}
-  `;
+    const count = await sql`
+      SELECT COUNT(*)
+      FROM good_deeds
+      JOIN users ON good_deeds.user_id = users.id
+      WHERE
+        users.name ILIKE ${`%${query}%`} OR
+        good_deeds.deed::text ILIKE ${`%${query}%`} OR
+        good_deeds.date::text ILIKE ${`%${query}%`} OR
+        good_deeds.status ILIKE ${`%${query}%`}
+    `;
 
     const totalPages = Math.ceil(Number(count.rows[0].count) / ITEMS_PER_PAGE);
     return totalPages;
@@ -202,41 +204,40 @@ export async function fetchUsers() {
     return users;
   } catch (err) {
     console.error('Database Error:', err);
-    throw new Error('Failed to fetch all customers.');
+    throw new Error('Failed to fetch all users.');
   }
 }
 
-export async function fetchFilteredCustomers(query: string) {
-  noStore();
+// export async function fetchFilteredCustomers(query: string) {
+//   noStore();
   
-  try {
-    const data = await sql<FriendsTable>`
-		SELECT
-		  customers.id,
-		  customers.name,
-		  customers.email,
-		  customers.image_url,
-		  COUNT(good_deeds.id) AS total_good_deeds,
-		FROM customers
-		LEFT JOIN good_deeds ON customers.id = good_deeds.customer_id
+//   try {
+//     const data = await sql<FriendsTable>`
+// 		SELECT
+// 		  users.id,
+// 		  users.name,
+// 		  users.email,
+// 		  COUNT(good_deeds.id) AS total_good_deeds,
+// 		FROM users
+// 		LEFT JOIN good_deeds ON users.id = good_deeds.user_id
 
-		WHERE
-      customers.name ILIKE ${`%${query}%`} OR
-      customers.email ILIKE ${`%${query}%`}
-      GROUP BY customers.id, customers.name, customers.email, customers.image_url
-      ORDER BY customers.name ASC
-	  `;
+// 		WHERE
+//       users.name ILIKE ${`%${query}%`} OR
+//       users.email ILIKE ${`%${query}%`}
+//       GROUP BY users.id, users.name, users.email
+//       ORDER BY users.name ASC
+// 	  `;
 
-    const customers = data.rows.map((customer) => ({
-      ...customer,
-    }));
+//     const users = data.rows.map((user) => ({
+//       ...user,
+//     }));
 
-    return customers;
-  } catch (err) {
-    console.error('Database Error:', err);
-    throw new Error('Failed to fetch customer table.');
-  }
-}
+//     return users;
+//   } catch (err) {
+//     console.error('Database Error:', err);
+//     throw new Error('Failed to fetch customer table.');
+//   }
+// }
 
 export async function fetchFilteredUsers(query: string) {
   noStore();
@@ -250,8 +251,7 @@ export async function fetchFilteredUsers(query: string) {
 		FROM users
 		LEFT JOIN good_deeds ON users.id = good_deeds.user_id
 		WHERE
-		  users.name ILIKE ${`%${query}%`} OR
-        users.email ILIKE ${`%${query}%`}
+		  users.name ILIKE ${`%${query}%`}
 		GROUP BY users.id, users.name
 		ORDER BY users.name ASC
 	  `;
@@ -263,7 +263,7 @@ export async function fetchFilteredUsers(query: string) {
     return users;
   } catch (err) {
     console.error('Database Error:', err);
-    throw new Error('Failed to fetch customer table.');
+    throw new Error('Failed to fetch user table.');
   }
 }
 

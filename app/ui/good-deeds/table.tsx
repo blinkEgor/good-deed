@@ -1,4 +1,4 @@
-import Image from 'next/image';
+// import Image from 'next/image';
 import { UpdateGoodDeed, DeleteGoodDeed } from '@/app/ui/good-deeds/buttons';
 import GoodDeedStatus from '@/app/ui/good-deeds/status';
 import { formatDateToLocal } from '@/app/lib/utils';
@@ -26,13 +26,13 @@ export default async function GoodDeedsTable({
                 <div className="flex items-center justify-between border-b pb-4">
                   <div>
                     <div className="mb-2 flex items-center">
-                      <Image
+                      {/* <Image
                         alt='User icon image'
                         src={goodDeed.image_url}
                         className="mr-2 rounded-full"
                         width={28}
                         height={28}
-                      />
+                      /> */}
                       <p>{goodDeed.name}</p>
                     </div>
                   </div>
@@ -59,7 +59,7 @@ export default async function GoodDeedsTable({
             <thead className="rounded-lg text-left text-sm font-normal">
               <tr>
                 <th scope="col" className="px-4 py-5 font-medium sm:pl-6">
-                  Customer
+                  User
                 </th>
                 <th scope="col" className="px-3 py-5 font-medium">
                   Deed
@@ -83,13 +83,13 @@ export default async function GoodDeedsTable({
                 >
                   <td className="whitespace-nowrap py-3 pl-6 pr-3">
                     <div className="flex items-center gap-3">
-                      <Image
+                      {/* <Image
                         alt='good deed image'
                         src={goodDeed.image_url}
                         className="rounded-full"
                         width={28}
                         height={28}
-                      />
+                      /> */}
                       <p>{goodDeed.name}</p>
                     </div>
                   </td>

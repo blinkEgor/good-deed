@@ -146,12 +146,12 @@ export async function registration(
   // };
 
   const user = {
-    id: randomUUID(),
+    // id: randomUUID(),
     name: formData.get('name'),
     email: formData.get('email'),
     password: formData.get('password'),
   };
-  const { id, name, email, password } = <User>user;
+  const { /*id,*/ name, email, password } = <User>user;
 
   const saltRounds = 10;
   const myPlaintextPassword = password;
@@ -163,9 +163,14 @@ export async function registration(
     const hash = await bcrypt.hash(myPlaintextPassword, salt);
 
     await sql`
-      INSERT INTO users (id, name, email, password)
-      VALUES (${id}, ${name}, ${email}, ${hash})
+      INSERT INTO users (name, email, password)
+      VALUES (${name}, ${email}, ${hash})
     `;
+
+    // await sql`
+    //   INSERT INTO users (id, name, email, password)
+    //   VALUES (${id}, ${name}, ${email}, ${hash})
+    // `;
   } catch (error) {
     console.log('comething wrong!!!');
     throw error;

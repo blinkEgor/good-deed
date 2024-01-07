@@ -14,7 +14,7 @@ export type Customer = {
 
 export type GoodDeed = {
   id: string;
-  customer_id: string;
+  user_id: string;
   // amount: number;
   deed: string;
   date: string;
@@ -39,12 +39,21 @@ export type LatestGoodDeedRaw = Omit<LatestGoodDeed, 'amount'> & {
   amount: number;
 };
 
+export type GoodDeedsCountUsers = {
+  id: string;
+  status: 'doing' | 'done';
+  date: string;
+  deed: string;
+  user_id: string;
+  name: string;
+};
+
 export type GoodDeedsTable = {
   id: string;
-  customer_id: string;
+  user_id: string;
   name: string;
   deed: string;
-  image_url: string;
+  // image_url: string;
   date: string;
   // amount: number;
   status: 'doing' | 'done';
