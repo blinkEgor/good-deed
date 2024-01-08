@@ -33,17 +33,16 @@ export default async function Page({
           <Pagination totalPages={totalPages} />
         </div>
       </div>
-      <div className="mt-4 flex items-center justify-between gap-2 md:mt-8">
-        <Search placeholder="Search users and good deeds..." />
+      {/* <div className="mt-4 flex items-center justify-between gap-2 md:mt-8"> */}
+        {/* <Search placeholder="Search users and good deeds..." /> */}
         {/* <CreateGoodDeed /> */}
-      </div>
+      {/* </div> */}
        <Suspense key={query + currentPage} fallback={<UsersTableSkeleton />}>
-        {/* <UsersTableSkeleton /> */}
         <UsersTable query={query} currentPage={currentPage} />
       </Suspense>
       <div className="mt-5 flex justify-end">
-          <Pagination totalPages={totalPages} />
-        </div>
+        <Pagination totalPages={totalPages} />
+      </div>
     </div>
     );
 }

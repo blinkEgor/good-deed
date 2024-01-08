@@ -2,9 +2,13 @@
 // import Link from 'next/link';
 // import { deleteGoodDeed } from '@/app/lib/actions';
 
-export function SubscribeUser({ id }: { id: string }) {
+export function SubscribeUser({ name }: { name: string }) {
   return (
-    <div></div>
+    <div className="w-32 px-3 py-2 text-sm font-semibold bg-green-600 flex justify-center item-center rounded-md hover:bg-green-400">
+      <span>
+        Subscribe
+      </span>
+    </div>
   );
 }
 

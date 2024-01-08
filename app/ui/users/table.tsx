@@ -1,8 +1,13 @@
-import Image from 'next/image';
+// import Image from 'next/image';
 // import { UpdateGoodDeed, DeleteGoodDeed } from '@/app/ui/good-deeds/buttons';
 // import GoodDeedStatus from '@/app/ui/good-deeds/status';
 import { formatDateToLocal } from '@/app/lib/utils';
 import { fetchFilteredGoodDeeds } from '@/app/lib/data';
+import {
+  SubscribeUser,
+  UnsubscribeUser,
+} from '@/app/ui/users/buttons';
+import { subscribe } from 'diagnostics_channel';
 
 export default async function UsersTable({
   query,
@@ -45,6 +50,9 @@ export default async function UsersTable({
                     <div className='text-gray-300 mt-3 text-xs'>
                         <p>{formatDateToLocal(user.date)}</p>
                     </div>
+                    <td className="whitespace-nowrap px-3 py-3">
+                      {SubscribeUser(user)}
+                    </td>
                   </div>
                 </div>
               </div>
@@ -62,9 +70,7 @@ export default async function UsersTable({
                 <th scope="col" className="px-3 py-5 font-medium">
                   Date
                 </th>
-                <th scope="col" className="px-3 py-5 font-medium">
-                  Subscribe
-                </th>
+                <th scope="col" className="px-3 py-5 font-medium"></th>
                 <th scope="col" className="relative py-3 pl-6 pr-3">
                   <span className="sr-only">Edit</span>
                 </th>
@@ -93,6 +99,9 @@ export default async function UsersTable({
                   </td>
                   <td className="whitespace-nowrap px-3 py-3">
                     {formatDateToLocal(user.date)}
+                  </td>
+                  <td className="whitespace-nowrap px-3 py-3">
+                    {SubscribeUser(user)}
                   </td>
                 </tr>
               ))}
