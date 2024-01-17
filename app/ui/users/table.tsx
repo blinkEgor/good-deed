@@ -2,12 +2,12 @@
 // import { UpdateGoodDeed, DeleteGoodDeed } from '@/app/ui/good-deeds/buttons';
 // import GoodDeedStatus from '@/app/ui/good-deeds/status';
 import { formatDateToLocal } from '@/app/lib/utils';
-import { fetchFilteredGoodDeeds } from '@/app/lib/data';
+import { fetchFilteredUsersPage } from '@/app/lib/data';
 import {
   SubscribeUser,
   UnsubscribeUser,
 } from '@/app/ui/users/buttons';
-import { subscribe } from 'diagnostics_channel';
+// import { subscribe } from 'diagnostics_channel';
 
 export default async function UsersTable({
   query,
@@ -16,7 +16,7 @@ export default async function UsersTable({
   query: string;
   currentPage: number;
 }) {
-  const users = await fetchFilteredGoodDeeds(query, currentPage);
+  const users = await fetchFilteredUsersPage(query, currentPage);
 
   return (
     <div className="mt-6 flow-root text-gray-200">
@@ -44,15 +44,12 @@ export default async function UsersTable({
                 </div>
                 <div className="flex w-full items-center justify-between pt-4">
                   <div className='text-gray-100'>
-                    <p>{user.deed}</p>
+                    <p>{user.email}</p>
                   </div>
                   <div className='flex flex-col items-center'>
-                    <div className='text-gray-300 mt-3 text-xs'>
-                        <p>{formatDateToLocal(user.date)}</p>
+                    <div className="whitespace-nowrap px-3 py-3">
+                      <SubscribeUser name={user.name} />
                     </div>
-                    <td className="whitespace-nowrap px-3 py-3">
-                      {SubscribeUser(user)}
-                    </td>
                   </div>
                 </div>
               </div>
@@ -65,15 +62,12 @@ export default async function UsersTable({
                   User
                 </th>
                 <th scope="col" className="px-3 py-5 font-medium">
-                  Deed
-                </th>
-                <th scope="col" className="px-3 py-5 font-medium">
-                  Date
+                  Email
                 </th>
                 <th scope="col" className="px-3 py-5 font-medium"></th>
-                <th scope="col" className="relative py-3 pl-6 pr-3">
+                {/* <th scope="col" className="relative py-3 pl-6 pr-3">
                   <span className="sr-only">Edit</span>
-                </th>
+                </th> */}
               </tr>
             </thead>
             <tbody className="text-gray-200">
@@ -95,13 +89,13 @@ export default async function UsersTable({
                     </div>
                   </td>
                   <td className='whitespace-wrap px-3 py-3'>
-                    {user.deed}
+                    {user.email}
                   </td>
-                  <td className="whitespace-nowrap px-3 py-3">
+                  {/* <td className="whitespace-nowrap px-3 py-3">
                     {formatDateToLocal(user.date)}
-                  </td>
+                  </td> */}
                   <td className="whitespace-nowrap px-3 py-3">
-                    {SubscribeUser(user)}
+                    <SubscribeUser name={user.name} />
                   </td>
                 </tr>
               ))}

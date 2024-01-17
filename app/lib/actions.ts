@@ -7,7 +7,6 @@ import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { signIn } from '@/auth';
 import { AuthError } from 'next-auth';
-import { randomUUID } from 'crypto';
 import * as bcrypt from 'bcrypt';
 
 const FormSchema = z.object({
@@ -138,20 +137,13 @@ export async function registration(
   previousState: any,
   formData: FormData,
 ) {
-  // type User = {
-  //   id: string,
-  //   name: string,
-  //   email: string,
-  //   password: string,
-  // };
 
   const user = {
-    // id: randomUUID(),
     name: formData.get('name'),
     email: formData.get('email'),
     password: formData.get('password'),
   };
-  const { /*id,*/ name, email, password } = <User>user;
+  const { name, email, password } = <User>user;
 
   const saltRounds = 10;
   const myPlaintextPassword = password;
@@ -166,15 +158,15 @@ export async function registration(
       INSERT INTO users (name, email, password)
       VALUES (${name}, ${email}, ${hash})
     `;
-
-    // await sql`
-    //   INSERT INTO users (id, name, email, password)
-    //   VALUES (${id}, ${name}, ${email}, ${hash})
-    // `;
   } catch (error) {
-    console.log('comething wrong!!!');
+    console.log('something wrong!!!');
     throw error;
   }
   revalidatePath('/');
   redirect('/');
+}
+
+export async function subscribe(name: string) {
+  console.log(`Name is __ ${name} __`);
+  console.log(`Current user is __  __`);
 }

@@ -1,18 +1,23 @@
+"use client"
+
 // import { PencilIcon, PlusIcon, TrashIcon } from '@heroicons/react/24/outline';
 // import Link from 'next/link';
-// import { deleteGoodDeed } from '@/app/lib/actions';
+import { subscribe } from '@/app/lib/actions';
 
 export function SubscribeUser({ name }: { name: string }) {
   return (
-    <div className="w-32 px-3 py-2 text-sm font-semibold bg-green-600 flex justify-center item-center rounded-md hover:bg-green-400">
+    <button 
+      className="w-32 px-3 py-2 text-sm font-semibold bg-green-600 flex justify-center item-center rounded-md hover:bg-green-400"
+      onClick={() => subscribe(name)}
+    >
       <span>
         Subscribe
       </span>
-    </div>
+    </button>
   );
 }
 
-export function UnsubscribeUser({ id }: { id: string }) {
+export function UnsubscribeUser({ name }: { name: string }) {
   return (
     <div></div>
   );

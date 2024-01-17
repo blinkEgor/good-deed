@@ -1,5 +1,6 @@
+import { getSession, useSession } from 'next-auth/react';
 import Pagination from '@/app/ui/good-deeds/pagination';
-import Search from '@/app/ui/search';
+// import Search from '@/app/ui/search';
 import UsersTable from '@/app/ui/users/table';
 // import { CreateGoodDeed } from '@/app/ui/good-deeds/buttons';
 import { lusitana } from '@/app/ui/fonts';

@@ -5,11 +5,11 @@ export type User = {
   password: string;
 };
 
-export type Customer = {
+export type UserPage = {
   id: string;
   name: string;
   email: string;
-  image_url: string;
+  // image_url: string;
 };
 
 export type GoodDeed = {

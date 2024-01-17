@@ -1,9 +1,10 @@
 import { sql } from '@vercel/postgres';
 import {
   UserField,
-  FriendsTable,
+  // FriendsTable,
   // CustomerField,
-  GoodDeedsCountUsers,
+  // GoodDeedsCountUsers,
+  UserPage,
   GoodDeedForm,
   GoodDeedsTable,
   LatestGoodDeedRaw,
@@ -117,6 +118,31 @@ export async function fetchFilteredGoodDeeds(
   } catch (error) {
     console.error('Database Error:', error);
     throw new Error('Failed to fetch good_deeds.');
+  }
+}
+
+export async function fetchFilteredUsersPage(
+  query: string,
+  currentPage: number,
+) {
+  noStore();
+  
+  const offset = (currentPage - 1) * ITEMS_PER_PAGE;
+
+  try {
+    const users = await sql<UserPage>`
+      SELECT
+        id,
+        name,
+        email
+      FROM users
+      LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
+    `;
+
+    return users.rows;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch users.');
   }
 }
 
@@ -236,6 +262,34 @@ export async function fetchUsers() {
 //   } catch (err) {
 //     console.error('Database Error:', err);
 //     throw new Error('Failed to fetch customer table.');
+//   }
+// }
+
+// export async function fetchFilteredUsers(query: string) {
+//   noStore();
+  
+//   try {
+//     const data = await sql<User>`
+// 		SELECT
+// 		  users.id,
+// 		  users.name,
+
+// 		FROM users
+// 		LEFT JOIN good_deeds ON users.id = good_deeds.user_id
+// 		WHERE
+// 		  users.name ILIKE ${`%${query}%`}
+// 		GROUP BY users.id, users.name
+// 		ORDER BY users.name ASC
+// 	  `;
+
+//     const users = data.rows.map((user) => ({
+//       ...user,
+//     }));
+
+//     return users;
+//   } catch (err) {
+//     console.error('Database Error:', err);
+//     throw new Error('Failed to fetch user table.');
 //   }
 // }
 
