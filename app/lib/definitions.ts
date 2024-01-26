@@ -5,6 +5,12 @@ export type User = {
   password: string;
 };
 
+export type AuthUser = {
+  user_id: string;
+  username: string;
+  email: string;
+};
+
 export type UserPage = {
   id: string;
   name: string;

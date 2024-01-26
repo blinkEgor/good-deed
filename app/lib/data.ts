@@ -9,6 +9,7 @@ import {
   GoodDeedsTable,
   LatestGoodDeedRaw,
   User,
+  AuthUser,
   // Revenue,
 } from './definitions';
 import { unstable_noStore as noStore } from 'next/cache';
@@ -330,5 +331,15 @@ export async function getUser(email: string) {
   } catch (error) {
     console.error('Failed to fetch user:', error);
     throw new Error('Failed to fetch user.');
+  }
+}
+
+export async function getAuthUser() {
+  try {
+    const user = await sql`SELECT user_id,username,email FROM auth_user`;
+    return user.rows[0] as AuthUser;
+  } catch(error) {
+    console.error('Failed query:',error);
+    throw new Error('Failed query.');
   }
 }
