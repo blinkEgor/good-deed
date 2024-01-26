@@ -12,7 +12,7 @@ import * as bcrypt from 'bcrypt';
 const FormSchema = z.object({
   id: z.string(),
   userId: z.string({
-    invalid_type_error: 'Please select a customer.',
+    invalid_type_error: 'Please select a user.',
   }),
   deed: z.string({
     invalid_type_error: 'Please write a text.',

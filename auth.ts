@@ -32,6 +32,15 @@ export const { auth, signIn, signOut } = NextAuth({
           if (!user) return null;
           const passwordsMatch = await bcrypt.compare(password, user.password);
 
+          sql<User>`
+            UPDATE auth_user
+            SET user_id = ${user.id},
+                username = ${user.name},
+                email = ${user.email}
+              
+            WHERE password = '111';
+          `;
+
           if (passwordsMatch) return user;
         }
         
