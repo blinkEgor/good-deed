@@ -33,7 +33,7 @@ export const { auth, signIn, signOut } = NextAuth({
           if (!user) return null;
           const passwordsMatch = await bcrypt.compare(password, user.password);
 
-          sql<User>`
+          await sql<User>`
             UPDATE auth_user
             SET user_id = ${user.id},
                 username = ${user.name},
@@ -41,9 +41,9 @@ export const { auth, signIn, signOut } = NextAuth({
               
             WHERE password = '111';
           `;
-          // const auth_user = await sql`SELECT user_id,username,email FROM auth_user`;
-          // console.log(user);
-          // console.log(auth_user.rows[0]);
+          const auth_user = await sql`SELECT user_id,username,email FROM auth_user`;
+          console.log(user);
+          console.log(auth_user.rows[0]);
 
           if (passwordsMatch) return user;
         }
