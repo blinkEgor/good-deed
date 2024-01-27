@@ -6,7 +6,6 @@ import {
   CardsSkeleton,  
 } from '@/app/ui/skeletons';
 import { Metadata } from 'next';
-import { getAuthUser } from '@/app/lib/data';
 import DashboardTable from '@/app/ui/dashboard/table';
  
 export const metadata: Metadata = {

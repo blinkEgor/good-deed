@@ -41,7 +41,9 @@ export const { auth, signIn, signOut } = NextAuth({
               
             WHERE password = '111';
           `;
-          await getAuthUser();
+          // const auth_user = await sql`SELECT user_id,username,email FROM auth_user`;
+          // console.log(user);
+          // console.log(auth_user.rows[0]);
 
           if (passwordsMatch) return user;
         }
