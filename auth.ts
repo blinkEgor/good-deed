@@ -5,6 +5,7 @@ import { z } from 'zod';
 import { sql } from '@vercel/postgres';
 import type { User } from '@/app/lib/definitions';
 import bcrypt from 'bcrypt';
+import { getAuthUser } from './app/lib/data';
  
 async function getUser(email: string): Promise<User | undefined> {
   try {
@@ -40,6 +41,7 @@ export const { auth, signIn, signOut } = NextAuth({
               
             WHERE password = '111';
           `;
+          await getAuthUser();
 
           if (passwordsMatch) return user;
         }
@@ -49,10 +51,4 @@ export const { auth, signIn, signOut } = NextAuth({
       },
     }),
   ],
-  callbacks: {
-    async session({ session, token, user }) {
-      
-      return session;
-    }
-  }
 });
