@@ -166,6 +166,10 @@ export async function registration(
   redirect('/');
 }
 
+export async function changeUsername(id:string){}
+
+export async function changeEmail(id:string){}
+
 export async function subscribe(name: string) {
   console.log(`Name is __ ${name} __`);
   console.log(`Current user is __  __`);
