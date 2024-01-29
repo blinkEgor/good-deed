@@ -134,7 +134,7 @@ export async function authenticate(
 }
 
 export async function registration(
-  previousState: string | undefined,
+  previousState: any,
   formData: FormData,
 ) {
 
