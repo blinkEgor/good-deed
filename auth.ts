@@ -5,7 +5,8 @@ import { z } from 'zod';
 import { sql } from '@vercel/postgres';
 import type { User } from '@/app/lib/definitions';
 import bcrypt from 'bcrypt';
-import { AuthUser } from '@/app/lib/definitions';
+import { getAuthUser } from './app/lib/data';
+// import { AuthUser } from '@/app/lib/definitions';
  
 async function getUser(email: string): Promise<User | undefined> {
   try {
@@ -41,6 +42,7 @@ export const { auth, signIn, signOut } = NextAuth({
               
             WHERE password = '111';
           `;
+          // getAuthUser();
           // const auth_user = await sql`SELECT user_id,username,email FROM auth_user`;
           // console.log(user);
           // console.log(auth_user.rows[0]);
@@ -55,12 +57,12 @@ export const { auth, signIn, signOut } = NextAuth({
   ],
 });
 
-export async function getAuthUser() {
-  try {
-    const user = await sql`SELECT user_id,username,email FROM auth_user`;
-    return user.rows[0] as AuthUser;
-  } catch(error) {
-    console.error('Failed query:',error);
-    throw new Error('Failed query.');
-  }
-}
+// export async function getAuthUser() {
+//   try {
+//     const user = await sql`SELECT user_id,username,email FROM auth_user`;
+//     return user.rows[0] as AuthUser;
+//   } catch(error) {
+//     console.error('Failed query:',error);
+//     throw new Error('Failed query.');
+//   }
+// }

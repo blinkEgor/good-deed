@@ -1,7 +1,9 @@
-import { getAuthUser } from "@/auth";
+// import { getAuthUser } from "@/auth";
+import { getAuthUser } from "@/app/lib/data";
+import { auth } from "@/auth";
 
 export default async function DashboardTable() {
-
+  auth();
   const user = await getAuthUser();
 
   return (
@@ -9,13 +11,13 @@ export default async function DashboardTable() {
       <div className="inline-block min-w-full align-middle">
         <div className="rounded-lg flex flex-col p-2 md:pt-0">
             <div className="round-lg p-2 md:pt-0">
-                <p className="flex gap-2">
+                <p className="flex justify-between gap-2">
                     <span>Your name: {user.username}</span>
                     <button className="bg-blue-400 py-1.5 px-1.5 rounded-md">Change<br/>name</button>
                 </p>
             </div>
             <div className="round-lg p-2 md:pt-0">
-                <p className="flex gap-2">
+                <p className="flex justify-between gap-2">
                     <span>Your email: {user.email}</span>
                     <button className="bg-blue-400 py-1.5 px-1.5 rounded-md">Change<br/>email</button>
                 </p>

@@ -334,12 +334,12 @@ export async function getUser(email: string) {
   }
 }
 
-// export async function getAuthUser() {
-//   try {
-//     const user = await sql`SELECT user_id,username,email FROM auth_user`;
-//     return user.rows[0] as AuthUser;
-//   } catch(error) {
-//     console.error('Failed query:',error);
-//     throw new Error('Failed query.');
-//   }
-// }
+export async function getAuthUser() {
+  try {
+    const user = await sql`SELECT user_id,username,email FROM auth_user`;
+    return user.rows[0] as AuthUser;
+  } catch(error) {
+    console.error('Failed query:',error);
+    throw new Error('Failed query.');
+  }
+}
