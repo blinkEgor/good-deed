@@ -27,7 +27,7 @@ export default async function DashboardTable() {
             </p>
           </div>
           <div className="round-lg p-2 md:pt-0">
-            <button className="bg-red-600 py-1.5 px-1.5 rounded-md">Delete Accaunt</button>
+            <button className="bg-red-600 py-1.5 px-1.5 rounded-md hover:bg-red-500">Delete Accaunt</button>
           </div>
         </div>
       </div>
