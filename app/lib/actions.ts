@@ -166,7 +166,10 @@ export async function registration(
   redirect('/');
 }
 
-export async function changeUsername(id:string){}
+export async function changeUserdata(
+  previousState: any,
+  formData: FormData,
+){}
 
 export async function changeEmail(id:string){}
 
