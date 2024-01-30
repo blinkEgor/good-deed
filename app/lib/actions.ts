@@ -8,6 +8,8 @@ import { redirect } from 'next/navigation';
 import { signIn } from '@/auth';
 import { AuthError } from 'next-auth';
 import * as bcrypt from 'bcrypt';
+import { getAuthUser } from '@/app/lib/data';
+import { auth } from '@/auth';
 
 const FormSchema = z.object({
   id: z.string(),
@@ -169,9 +171,39 @@ export async function registration(
 export async function changeUserdata(
   previousState: any,
   formData: FormData,
-){}
+){
+  try{
+    auth();
+    const prevData = await getAuthUser();
 
-export async function changeEmail(id:string){}
+    const user = {
+      name: formData.get('name'),
+      email: formData.get('email'),
+    };
+    const { name, email } = <User>user;
+    
+    await sql`
+      UPDATE users
+      SET name = ${name},
+          email = ${email}
+      WHERE email = ${prevData.email}
+    `;
+
+    await sql<User>`
+      UPDATE auth_user
+      SET user_id = ${prevData.user_id},
+          username = ${name},
+          email = ${email}
+        
+      WHERE password = '111';
+    `;
+  }catch(error){
+    console.log('something wrong!!!');
+    throw error;
+  }
+  revalidatePath('/dashboard');
+  redirect('/dashboard');
+}
 
 export async function subscribe(name: string) {
   console.log(`Name is __ ${name} __`);

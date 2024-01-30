@@ -20,7 +20,6 @@ function ChangeButton() {
 export default function ChangeUserdataForm() {
     const [state, formAction] = useFormState(changeUserdata, null);
     return (
-        // <form action={''} className="space-y-3">
         <form action={formAction} className="space-y-3">
             <div className="flex-1 rounded-lg bg-gray-600 text-gray-100 px-6 pb-4 pt-8">
                 <h1 className={`${lusitana.className} mb-3 text-2xl`}>
@@ -31,16 +30,16 @@ export default function ChangeUserdataForm() {
                     <div>
                         <label
                             className="mb-3 mt-5 block text-xs font-medium text-gray-50"
-                            htmlFor="username"
+                            htmlFor="name"
                         >
                             Username
                         </label>
                         <div className="relative">
                             <input
                                 className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-200 bg-gray-600"
-                                id="username"
+                                id="name"
                                 type="name"
-                                name="username"
+                                name="name"
                                 placeholder="Enter your username"
                                 required
                             />
