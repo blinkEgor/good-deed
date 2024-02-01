@@ -4,6 +4,7 @@ import { auth } from "@/auth";
 import {
   ChangeUsername,
   ChangeEmail,
+  DeleteUser,
 } from '@/app/ui/dashboard/buttons';
 
 export default async function DashboardTable() {
@@ -27,7 +28,7 @@ export default async function DashboardTable() {
             </p>
           </div>
           <div className="round-lg p-2 md:pt-0">
-            <button className="bg-red-600 py-1.5 px-1.5 rounded-md hover:bg-red-500">Delete Accaunt</button>
+            <DeleteUser id={user.user_id}/>
           </div>
         </div>
       </div>

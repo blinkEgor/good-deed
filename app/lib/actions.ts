@@ -5,11 +5,10 @@ import { z } from 'zod';
 import { sql } from '@vercel/postgres';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
-import { signIn } from '@/auth';
+import { signIn, signOut, auth } from '@/auth';
 import { AuthError } from 'next-auth';
 import * as bcrypt from 'bcrypt';
 import { getAuthUser } from '@/app/lib/data';
-import { auth } from '@/auth';
 
 const FormSchema = z.object({
   id: z.string(),
@@ -151,8 +150,6 @@ export async function registration(
   const myPlaintextPassword = password;
 
   try {
-    console.log('registration success!');
-
     const salt = await bcrypt.genSalt(saltRounds);
     const hash = await bcrypt.hash(myPlaintextPassword, salt);
 
@@ -161,7 +158,6 @@ export async function registration(
       VALUES (${name}, ${email}, ${hash})
     `;
   } catch (error) {
-    console.log('something wrong!!!');
     throw error;
   }
   revalidatePath('/');
@@ -203,6 +199,17 @@ export async function changeUserdata(
   }
   revalidatePath('/dashboard');
   redirect('/dashboard');
+}
+
+export async function deleteUser(id: string){
+  try{
+    await sql`DELETE FROM users WHERE id = ${id}`;
+    await signOut();
+  }catch(error){
+    throw error;
+  }
+  revalidatePath('/');
+  redirect('/');
 }
 
 export async function subscribe(name: string) {
