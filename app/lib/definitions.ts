@@ -90,6 +90,11 @@ export type UserField = {
   name: string;
 };
 
+// export type AuthUserField = {
+//   user_id: string;
+//   username: string;
+// };
+
 export type CustomerField = {
   id: string;
   name: string;

@@ -10,9 +10,11 @@ import {
   LatestGoodDeedRaw,
   User,
   AuthUser,
+  // AuthUserField,
   // Revenue,
 } from './definitions';
 import { unstable_noStore as noStore } from 'next/cache';
+import { auth } from '@/auth';
 
 // export async function fetchRevenue() {
 //   noStore();
@@ -249,6 +251,27 @@ export async function fetchUsers() {
     throw new Error('Failed to fetch all users.');
   }
 }
+
+// export async function fetchAuthUser() {
+//   noStore();
+//   auth();
+  
+//   try {
+//     // const data = await sql<AuthUserField>`
+//     //   SELECT
+//     //     user_id,
+//     //     username
+//     //   FROM auth_user
+//     //   ORDER BY name ASC
+//     // `;
+
+//     const user = ;
+//     return user as AuthUserField;
+//   } catch (err) {
+//     console.error('Database Error:', err);
+//     throw new Error('Failed to fetch all users.');
+//   }
+// }
 
 // export async function fetchFilteredCustomers(query: string) {
 //   noStore();
