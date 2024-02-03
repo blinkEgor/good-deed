@@ -42,7 +42,6 @@ export async function createGoodDeed(prevState: State, formData: FormData) {
     deed: formData.get('deed'),
     status: formData.get('status'),
   });
-  console.log(validatedFields);
  
   if (!validatedFields.success) {
     return {
