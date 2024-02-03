@@ -31,7 +31,7 @@ export default function EditGoodDeedForm({
         {/* User Name */}
         <div className="mb-4">
           <label htmlFor="user" className="mb-2 block text-sm font-medium">
-            Choose user
+            User
           </label>
           <div className="relative">
             <select
@@ -40,7 +40,7 @@ export default function EditGoodDeedForm({
               className="peer block w-full cursor-pointer rounded-md border border-gray-500 py-2 pl-10 text-sm outline-2 placeholder:text-gray-200 bg-gray-600"
               defaultValue={good_deed.user_id}
             >
-              <option key={good_deed.user_id} value={user_id}>
+              <option key={user_id} value={user_id}>
                 {username}
               </option>
               {/* {users.map((user) => (

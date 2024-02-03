@@ -1,6 +1,6 @@
 import Form from '@/app/ui/good-deeds/create-form';
 import Breadcrumbs from '@/app/ui/good-deeds/breadcrumbs';
-import { fetchUsers } from '@/app/lib/data';
+import { getAuthUser } from '@/app/lib/data';
 import { Metadata } from 'next';
  
 export const metadata: Metadata = {
@@ -8,7 +8,10 @@ export const metadata: Metadata = {
 };
  
 export default async function Page() {
-  const users = await fetchUsers();
+  const [username, user_id] = await Promise.all([
+    (await getAuthUser()).username,
+    (await getAuthUser()).user_id,
+  ]);
  
   return (
     <main>
@@ -22,7 +25,7 @@ export default async function Page() {
           },
         ]}
       />
-      <Form users={users} />
+      <Form username={username} user_id={user_id} />
     </main>
   );
 }
