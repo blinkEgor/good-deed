@@ -95,6 +95,7 @@ export async function fetchFilteredGoodDeeds(
   noStore();
   
   const offset = (currentPage - 1) * ITEMS_PER_PAGE;
+  const name = (await getAuthUser()).username;
 
   try {
     const goodDeeds = await sql<GoodDeedsTable>`
@@ -107,13 +108,27 @@ export async function fetchFilteredGoodDeeds(
       FROM good_deeds
       JOIN users ON good_deeds.user_id = users.id
       WHERE
-        users.name ILIKE ${`%${query}%`} OR
-        good_deeds.deed::text ILIKE ${`%${query}%`} OR
-        good_deeds.date::text ILIKE ${`%${query}%`} OR
-        good_deeds.status ILIKE ${`%${query}%`}
+        users.name = ${name}
       ORDER BY good_deeds.date DESC
       LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
     `;
+    // const goodDeeds = await sql<GoodDeedsTable>`
+    //   SELECT
+    //     good_deeds.id,
+    //     good_deeds.deed,
+    //     good_deeds.date,
+    //     good_deeds.status,
+    //     users.name
+    //   FROM good_deeds
+    //   JOIN users ON good_deeds.user_id = users.id
+    //   WHERE
+    //     users.name ILIKE ${`%${query}%`} OR
+    //     good_deeds.deed::text ILIKE ${`%${query}%`} OR
+    //     good_deeds.date::text ILIKE ${`%${query}%`} OR
+    //     good_deeds.status ILIKE ${`%${query}%`}
+    //   ORDER BY good_deeds.date DESC
+    //   LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
+    // `;
 
     return goodDeeds.rows;
   } catch (error) {

@@ -14,15 +14,17 @@ import { useFormState } from 'react-dom';
 
 export default function EditGoodDeedForm({
   good_deed,
-  users,
+  username,
+  user_id,
 }: {
   good_deed: GoodDeedForm;
-  users: UserField[];
+  username: string;
+  user_id: string;
 }) {
   const initialState = { message: null, errors: {} };
   const updateGoodDeedWithId = updateGoodDeed.bind(null, good_deed.id);
   const [state, dispatch] = useFormState(updateGoodDeedWithId, initialState);
- 
+
   return (
     <form action={dispatch}>
       <div className="rounded-md bg-gray-700 text-gray-100 p-4 md:p-6">
@@ -38,14 +40,14 @@ export default function EditGoodDeedForm({
               className="peer block w-full cursor-pointer rounded-md border border-gray-500 py-2 pl-10 text-sm outline-2 placeholder:text-gray-200 bg-gray-600"
               defaultValue={good_deed.user_id}
             >
-              <option value="" disabled>
-                Select a user
+              <option key={user_id} value={user_id}>
+                {username}
               </option>
-              {users.map((user) => (
+              {/* {users.map((user) => (
                 <option key={user.id} value={user.id}>
                   {user.name}
                 </option>
-              ))}
+              ))} */}
             </select>
             <UserCircleIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-200" />
           </div>
