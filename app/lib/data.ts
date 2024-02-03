@@ -373,6 +373,8 @@ export async function getUser(email: string) {
 }
 
 export async function getAuthUser() {
+  noStore();
+  auth();
   try {
     const user = await sql`SELECT user_id,username,email FROM auth_user`;
     return user.rows[0] as AuthUser;

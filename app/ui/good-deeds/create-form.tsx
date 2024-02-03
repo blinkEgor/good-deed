@@ -35,7 +35,7 @@ export default function Form({
               id="user"
               name="userId"
               className="peer block w-full cursor-pointer rounded-md border border-gray-500 py-2 pl-10 text-sm outline-2 bg-gray-600 placeholder:text-gray-100"
-              defaultValue={user_id}
+              defaultValue=""
               aria-describedby="user-error"
             >
               <option key={user_id} value={user_id}>
