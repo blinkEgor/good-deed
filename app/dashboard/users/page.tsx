@@ -6,7 +6,7 @@ import UsersTable from '@/app/ui/users/table';
 import { lusitana } from '@/app/ui/fonts';
 import { UsersTableSkeleton } from '@/app/ui/skeletons';
 import { Suspense } from 'react';
-import { fetchGoodDeedsPages } from '@/app/lib/data';
+import { fetchUsersPages } from '@/app/lib/data';
 import { Metadata } from 'next';
  
 export const metadata: Metadata = {
@@ -24,7 +24,7 @@ export default async function Page({
     const query = searchParams?.query || '';
     const currentPage = Number(searchParams?.page) || 1;
 
-    const totalPages = await fetchGoodDeedsPages(query);
+    const totalPages = await fetchUsersPages(query);
 
     return (
     <div className="w-full bg-gray-800">

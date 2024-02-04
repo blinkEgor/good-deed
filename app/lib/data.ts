@@ -187,6 +187,27 @@ export async function fetchGoodDeedsPages(query: string) {
   }
 }
 
+export async function fetchUsersPages(query: string) {
+  noStore();
+  
+  try {
+    const count = await sql`
+      SELECT COUNT(*)
+      FROM users
+      WHERE
+        users.name ILIKE ${`%${query}%`} OR
+        users.id::text ILIKE ${`%${query}%`} OR
+        users.email::text ILIKE ${`%${query}%`}
+    `;
+
+    const totalPages = Math.ceil(Number(count.rows[0].count) / ITEMS_PER_PAGE);
+    return totalPages;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch total number of good deeds.');
+  }
+}
+
 export async function fetchGoodDeedById(id: string) {
   noStore();
   
