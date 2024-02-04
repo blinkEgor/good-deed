@@ -2,12 +2,13 @@
 // import { UpdateGoodDeed, DeleteGoodDeed } from '@/app/ui/good-deeds/buttons';
 // import GoodDeedStatus from '@/app/ui/good-deeds/status';
 // import { formatDateToLocal } from '@/app/lib/utils';
-import { fetchFilteredUsersPage } from '@/app/lib/data';
+import { fetchFilteredUsersPage, getAuthUser } from '@/app/lib/data';
 import {
   SubscribeUser,
   UnsubscribeUser,
 } from '@/app/ui/users/buttons';
 // import { subscribe } from 'diagnostics_channel';
+import {UserPage} from '@/app/lib/definitions';
 
 export default async function UsersTable({
   query,
@@ -17,13 +18,18 @@ export default async function UsersTable({
   currentPage: number;
 }) {
   const users = await fetchFilteredUsersPage(query, currentPage);
+  const auth_user = await getAuthUser();
+  
+  const other_users = users.filter(user=>user.name!==auth_user.username);
+  // for(let i=0; i<users.length; i++){ users[i].name!==auth_user.username && other_users.push(users[i]) }
+  // console.log(other_users);
 
   return (
     <div className="mt-6 flow-root text-gray-200">
       <div className="inline-block min-w-full align-middle">
         <div className="rounded-lg bg-gray-700 p-2 md:pt-0">
           <div className="md:hidden">
-            {users?.map((user) => (
+            {other_users?.map((user) => (
               <div
                 key={user.id}
                 className="mb-2 w-full rounded-md p-4"
@@ -71,7 +77,7 @@ export default async function UsersTable({
               </tr>
             </thead>
             <tbody className="text-gray-200">
-              {users?.map((user) => (
+              {other_users?.map((user) => (
                 <tr
                   key={user.id}
                   className="w-full border-b py-3 text-sm last-of-type:border-none [&:first-child>td:first-child]:rounded-tl-lg [&:first-child>td:last-child]:rounded-tr-lg [&:last-child>td:first-child]:rounded-bl-lg [&:last-child>td:last-child]:rounded-br-lg"
