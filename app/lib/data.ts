@@ -110,7 +110,10 @@ export async function fetchFilteredGoodDeeds(
       FROM good_deeds
       JOIN users ON good_deeds.user_id = users.id
       WHERE
-        users.name = ${name}
+        users.name ILIKE ${`%${query}%`} OR
+        good_deeds.deed::text ILIKE ${`%${query}%`} OR
+        good_deeds.date::text ILIKE ${`%${query}%`} OR
+        good_deeds.status ILIKE ${`%${query}%`}
       ORDER BY good_deeds.date DESC
       LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
     `;

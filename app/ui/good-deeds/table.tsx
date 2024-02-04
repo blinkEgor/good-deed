@@ -3,6 +3,7 @@ import { UpdateGoodDeed, DeleteGoodDeed } from '@/app/ui/good-deeds/buttons';
 import GoodDeedStatus from '@/app/ui/good-deeds/status';
 import { formatDateToLocal } from '@/app/lib/utils';
 import { fetchFilteredGoodDeeds } from '@/app/lib/data';
+import {getAuthUser} from '@/app/lib/data';
 
 export default async function GoodDeedsTable({
   query,
@@ -12,13 +13,16 @@ export default async function GoodDeedsTable({
   currentPage: number;
 }) {
   const goodDeeds = await fetchFilteredGoodDeeds(query, currentPage);
+  const auth_user = await getAuthUser();
+  
+  const my_good_deeds = goodDeeds.filter(deed=>deed.name===auth_user.username);
 
   return (
     <div className="mt-6 flow-root text-gray-200">
       <div className="inline-block min-w-full align-middle">
         <div className="rounded-lg bg-gray-700 p-2 md:pt-0">
           <div className="md:hidden">
-            {goodDeeds?.map((goodDeed) => (
+            {my_good_deeds?.map((goodDeed) => (
               <div
                 key={goodDeed.id}
                 className="mb-2 w-full rounded-md p-4"
@@ -76,7 +80,7 @@ export default async function GoodDeedsTable({
               </tr>
             </thead>
             <tbody className="text-gray-200">
-              {goodDeeds?.map((goodDeed) => (
+              {my_good_deeds?.map((goodDeed) => (
                 <tr
                   key={goodDeed.id}
                   className="w-full border-b py-3 text-sm last-of-type:border-none [&:first-child>td:first-child]:rounded-tl-lg [&:first-child>td:last-child]:rounded-tr-lg [&:last-child>td:first-child]:rounded-bl-lg [&:last-child>td:last-child]:rounded-br-lg"
