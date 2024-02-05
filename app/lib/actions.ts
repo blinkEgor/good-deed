@@ -213,6 +213,17 @@ export async function deleteUser(id: string){
 }
 
 export async function subscribe(name: string) {
-  console.log(`Name is __ ${name} __`);
-  console.log(`Current user is __  __`);
+  // console.log(`Name is __ ${name} __`);
+  // console.log(`Current user is __ ${(await getAuthUser()).username} __`);
+  const auth_username = (await getAuthUser()).username;
+
+  try{
+    await sql`
+      UPDATE  users 
+      SET friends = array_append(users.friends, ${name})
+      WHERE users.name = ${auth_username};
+    `;
+  }catch(error){
+    throw error;
+  }
 }
