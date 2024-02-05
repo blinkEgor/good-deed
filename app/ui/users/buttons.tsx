@@ -3,6 +3,7 @@
 // import { PencilIcon, PlusIcon, TrashIcon } from '@heroicons/react/24/outline';
 // import Link from 'next/link';
 import { subscribe, unSubscribe } from '@/app/lib/actions';
+import clsx from 'clsx';
 
 export function SubscribeUser({ name }: { name: string }) {
   return (

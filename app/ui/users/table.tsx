@@ -2,13 +2,11 @@
 // import { UpdateGoodDeed, DeleteGoodDeed } from '@/app/ui/good-deeds/buttons';
 // import GoodDeedStatus from '@/app/ui/good-deeds/status';
 // import { formatDateToLocal } from '@/app/lib/utils';
-import { fetchFilteredUsersPage, getAuthUser } from '@/app/lib/data';
+import { fetchFilteredUsersPage, getAuthUser, getFriends } from '@/app/lib/data';
 import {
   SubscribeUser,
   UnsubscribeUser,
 } from '@/app/ui/users/buttons';
-// import { subscribe } from 'diagnostics_channel';
-import {UserPage} from '@/app/lib/definitions';
 
 export default async function UsersTable({
   query,
@@ -21,8 +19,8 @@ export default async function UsersTable({
   const auth_user = await getAuthUser();
   
   const other_users = users.filter(user=>user.name!==auth_user.username);
-  // for(let i=0; i<users.length; i++){ users[i].name!==auth_user.username && other_users.push(users[i]) }
-  // console.log(other_users);
+
+  const friends_list = await getFriends(auth_user.username);
 
   return (
     <div className="mt-6 flow-root text-gray-200">
@@ -102,8 +100,11 @@ export default async function UsersTable({
                     {formatDateToLocal(user.date)}
                   </td> */}
                   <td className="whitespace-nowrap px-3 py-3 flex gap-2">
-                    <SubscribeUser name={user.name} />
-                    <UnsubscribeUser name={user.name}/>
+                    {
+                      (friends_list.find(n=>n===user.name))===user.name?
+                      <UnsubscribeUser name={user.name}/>:
+                      <SubscribeUser name={user.name}/>
+                    }
                   </td>
                 </tr>
               ))}
