@@ -53,8 +53,9 @@ export default async function UsersTable({
                     <p>{user.email}</p>
                   </div>
                   <div className='flex flex-col items-center'>
-                    <div className="whitespace-nowrap px-3 py-3">
+                    <div className="whitespace-nowrap px-3 py-3 flex flex-col gap-2">
                       <SubscribeUser name={user.name} />
+                      <UnsubscribeUser name={user.name}/>
                     </div>
                   </div>
                 </div>
@@ -100,8 +101,9 @@ export default async function UsersTable({
                   {/* <td className="whitespace-nowrap px-3 py-3">
                     {formatDateToLocal(user.date)}
                   </td> */}
-                  <td className="whitespace-nowrap px-3 py-3">
+                  <td className="whitespace-nowrap px-3 py-3 flex gap-2">
                     <SubscribeUser name={user.name} />
+                    <UnsubscribeUser name={user.name}/>
                   </td>
                 </tr>
               ))}

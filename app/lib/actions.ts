@@ -227,3 +227,17 @@ export async function subscribe(name: string) {
     throw error;
   }
 }
+
+export async function unSubscribe(name: string) {
+  const auth_username = (await getAuthUser()).username;
+
+  try{
+    await sql`
+      UPDATE  users 
+      SET friends = array_remove(users.friends, ${name})
+      WHERE users.name = ${auth_username};
+    `;
+  }catch(error){
+    throw error;
+  }
+}

@@ -2,7 +2,7 @@
 
 // import { PencilIcon, PlusIcon, TrashIcon } from '@heroicons/react/24/outline';
 // import Link from 'next/link';
-import { subscribe } from '@/app/lib/actions';
+import { subscribe, unSubscribe } from '@/app/lib/actions';
 
 export function SubscribeUser({ name }: { name: string }) {
   return (
@@ -19,7 +19,14 @@ export function SubscribeUser({ name }: { name: string }) {
 
 export function UnsubscribeUser({ name }: { name: string }) {
   return (
-    <div></div>
+    <button 
+      className="w-32 px-3 py-2 text-sm font-semibold bg-red-600 flex justify-center item-center rounded-md hover:bg-red-400"
+      onClick={() => unSubscribe(name)}
+    >
+      <span>
+        Unsubscribe
+      </span>
+    </button>
   );
 }
 
