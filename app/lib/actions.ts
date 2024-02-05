@@ -223,6 +223,8 @@ export async function subscribe(name: string) {
       SET friends = array_append(users.friends, ${name})
       WHERE users.name = ${auth_username};
     `;
+    revalidatePath('/dashboard/users');
+    redirect('/dashboard/users');
   }catch(error){
     throw error;
   }
@@ -237,6 +239,8 @@ export async function unSubscribe(name: string) {
       SET friends = array_remove(users.friends, ${name})
       WHERE users.name = ${auth_username};
     `;
+    revalidatePath('/dashboard/users');
+    redirect('/dashboard/users');
   }catch(error){
     throw error;
   }
