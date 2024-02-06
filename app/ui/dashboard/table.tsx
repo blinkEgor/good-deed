@@ -1,4 +1,3 @@
-// import { getAuthUser } from "@/auth";
 import { getAuthUser } from "@/app/lib/data";
 import { auth } from "@/auth";
 import {

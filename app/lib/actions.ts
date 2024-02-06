@@ -76,7 +76,6 @@ export async function updateGoodDeed(
 ) {
   const validatedFields = UpdateGoodDeed.safeParse({
     userId: formData.get('userId'),
-    // amount: formData.get('amount'),
     deed: formData.get('deed'),
     status: formData.get('status'),
   });
@@ -213,8 +212,6 @@ export async function deleteUser(id: string){
 }
 
 export async function subscribe(name: string) {
-  // console.log(`Name is __ ${name} __`);
-  // console.log(`Current user is __ ${(await getAuthUser()).username} __`);
   const auth_username = (await getAuthUser()).username;
 
   try{

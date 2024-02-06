@@ -1,6 +1,6 @@
 import Form from '@/app/ui/good-deeds/edit-form';
 import Breadcrumbs from '@/app/ui/good-deeds/breadcrumbs';
-import { fetchGoodDeedById, fetchUsers, getAuthUser } from '@/app/lib/data';
+import { fetchGoodDeedById, getAuthUser } from '@/app/lib/data';
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
  

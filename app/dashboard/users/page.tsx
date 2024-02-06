@@ -1,8 +1,5 @@
-// import { getSession, useSession } from 'next-auth/react';
 import Pagination from '@/app/ui/good-deeds/pagination';
-// import Search from '@/app/ui/search';
 import UsersTable from '@/app/ui/users/table';
-// import { CreateGoodDeed } from '@/app/ui/good-deeds/buttons';
 import { lusitana } from '@/app/ui/fonts';
 import { UsersTableSkeleton } from '@/app/ui/skeletons';
 import { Suspense } from 'react';
@@ -34,10 +31,6 @@ export default async function Page({
           <Pagination totalPages={totalPages} />
         </div>
       </div>
-      {/* <div className="mt-4 flex items-center justify-between gap-2 md:mt-8"> */}
-        {/* <Search placeholder="Search users and good deeds..." /> */}
-        {/* <CreateGoodDeed /> */}
-      {/* </div> */}
        <Suspense key={query + currentPage} fallback={<UsersTableSkeleton />}>
         <UsersTable query={query} currentPage={currentPage} />
       </Suspense>

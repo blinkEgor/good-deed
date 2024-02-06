@@ -1,9 +1,6 @@
 "use client"
 
-// import { PencilIcon, PlusIcon, TrashIcon } from '@heroicons/react/24/outline';
-// import Link from 'next/link';
 import { subscribe, unSubscribe } from '@/app/lib/actions';
-import clsx from 'clsx';
 
 export function SubscribeUser({ name }: { name: string }) {
   return (
@@ -30,16 +27,3 @@ export function UnsubscribeUser({ name }: { name: string }) {
     </button>
   );
 }
-
-// export function DeleteGoodDeed({ id }: { id: string }) {
-//   const deleteGoodDeedWithId = deleteGoodDeed.bind(null, id);
-
-//   return (
-//     <form action={deleteGoodDeedWithId}>
-//       <button className="rounded-md border p-2 hover:bg-gray-500">
-//         <span className="sr-only">Delete</span>
-//         <TrashIcon className="w-5" />
-//       </button>
-//     </form>
-//   );
-// }

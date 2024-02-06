@@ -1,7 +1,3 @@
-// import Image from 'next/image';
-// import { UpdateGoodDeed, DeleteGoodDeed } from '@/app/ui/good-deeds/buttons';
-// import GoodDeedStatus from '@/app/ui/good-deeds/status';
-// import { formatDateToLocal } from '@/app/lib/utils';
 import { fetchFilteredUsersPage, getAuthUser, getFriends } from '@/app/lib/data';
 import {
   SubscribeUser,
@@ -35,13 +31,6 @@ export default async function UsersTable({
                 <div className="flex items-center justify-between border-b pb-4">
                   <div>
                     <div className="mb-2 flex items-center">
-                      {/* <Image
-                        alt='User icon image'
-                        src={user.image_url}
-                        className="mr-2 rounded-full"
-                        width={28}
-                        height={28}
-                      /> */}
                       <p>{user.name}</p>
                     </div>
                   </div>
@@ -73,9 +62,6 @@ export default async function UsersTable({
                   Email
                 </th>
                 <th scope="col" className="px-3 py-5 font-medium"></th>
-                {/* <th scope="col" className="relative py-3 pl-6 pr-3">
-                  <span className="sr-only">Edit</span>
-                </th> */}
               </tr>
             </thead>
             <tbody className="text-gray-200">
@@ -86,22 +72,12 @@ export default async function UsersTable({
                 >
                   <td className="whitespace-nowrap py-3 pl-6 pr-3">
                     <div className="flex items-center gap-3">
-                      {/* <Image
-                        alt='good deed image'
-                        src={user.image_url}
-                        className="rounded-full"
-                        width={28}
-                        height={28}
-                      /> */}
                       <p>{user.name}</p>
                     </div>
                   </td>
                   <td className='whitespace-wrap px-3 py-3'>
                     {user.email}
                   </td>
-                  {/* <td className="whitespace-nowrap px-3 py-3">
-                    {formatDateToLocal(user.date)}
-                  </td> */}
                   <td className="whitespace-nowrap px-3 py-3 flex gap-2">
                     {
                       (friends_list.find(n=>n===user.name))===user.name?
