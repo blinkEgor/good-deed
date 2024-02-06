@@ -52,8 +52,11 @@ export default async function UsersTable({
                   </div>
                   <div className='flex flex-col items-center'>
                     <div className="whitespace-nowrap px-3 py-3 flex flex-col gap-2">
-                      <SubscribeUser name={user.name} />
-                      <UnsubscribeUser name={user.name}/>
+                      {
+                        (friends_list.find(n=>n===user.name))===user.name?
+                        <UnsubscribeUser name={user.name}/>:
+                        <SubscribeUser name={user.name}/>
+                      }
                     </div>
                   </div>
                 </div>

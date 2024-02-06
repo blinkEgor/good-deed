@@ -2,7 +2,7 @@
 import { UpdateGoodDeed, DeleteGoodDeed } from '@/app/ui/good-deeds/buttons';
 import GoodDeedStatus from '@/app/ui/good-deeds/status';
 import { formatDateToLocal } from '@/app/lib/utils';
-import { fetchFilteredGoodDeeds } from '@/app/lib/data';
+import { fetchFilteredGoodDeeds, getFriends } from '@/app/lib/data';
 import {getAuthUser} from '@/app/lib/data';
 
 export default async function GoodDeedsTable({
@@ -14,8 +14,9 @@ export default async function GoodDeedsTable({
 }) {
   const goodDeeds = await fetchFilteredGoodDeeds(query, currentPage);
   const auth_user = await getAuthUser();
+  const friends_list = await getFriends(auth_user.username);
   
-  const my_good_deeds = goodDeeds.filter(deed=>deed.name===auth_user.username);
+  const my_good_deeds = goodDeeds.filter(deed=>deed.name===auth_user.username||friends_list.find(n=>n===deed.name));
 
   return (
     <div className="mt-6 flow-root text-gray-200">
