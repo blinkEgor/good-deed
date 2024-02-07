@@ -82,8 +82,10 @@ export async function fetchFilteredGoodDeeds(
         good_deeds.date::text ILIKE ${`%${query}%`} OR
         good_deeds.status ILIKE ${`%${query}%`}
       ORDER BY good_deeds.date DESC
-      LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
     `;
+    
+    // LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
+    // `;
 
     return goodDeeds.rows;
   } catch (error) {

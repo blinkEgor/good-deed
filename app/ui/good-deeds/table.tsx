@@ -16,7 +16,7 @@ export default async function GoodDeedsTable({
   const friends_list = await getFriends(auth_user.username);
   
   const my_good_deeds = goodDeeds.filter(deed=>deed.name===auth_user.username||friends_list.find(n=>n===deed.name));
-
+  
   return (
     <div className="mt-6 flow-root text-gray-200">
       <div className="inline-block min-w-full align-middle">
