@@ -41,8 +41,12 @@ export default async function GoodDeedsTable({
                   </div>
                   <div className='flex flex-col items-center'>
                     <div className="flex justify-end gap-2">
-                      <UpdateGoodDeed id={goodDeed.id} />
-                      <DeleteGoodDeed id={goodDeed.id} />
+                      {
+                        goodDeed.name===auth_user.username&&<>
+                          <UpdateGoodDeed id={goodDeed.id} />
+                          <DeleteGoodDeed id={goodDeed.id} />
+                        </>
+                      }
                     </div>
                     <div className='text-gray-300 mt-3 text-xs'>
                         <p>{formatDateToLocal(goodDeed.date)}</p>
@@ -94,8 +98,12 @@ export default async function GoodDeedsTable({
                   </td>
                   <td className="whitespace-nowrap py-3 pl-6 pr-3">
                     <div className="flex justify-end gap-3">
-                      <UpdateGoodDeed id={goodDeed.id} />
-                      <DeleteGoodDeed id={goodDeed.id} />
+                      {
+                        goodDeed.name===auth_user.username&&<>
+                          <UpdateGoodDeed id={goodDeed.id} />
+                          <DeleteGoodDeed id={goodDeed.id} />
+                        </>
+                      }
                     </div>
                   </td>
                 </tr>
