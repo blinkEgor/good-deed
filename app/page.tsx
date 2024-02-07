@@ -24,7 +24,7 @@ export default function Page() {
             </Link>
             <Link
               href="/register"
-              className="flex items-center gap-5 self-start rounded-lg bg-gray-600 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-gray-600 md:text-base"
+              className="flex items-center gap-5 self-start rounded-lg bg-green-600 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-gray-600 md:text-base"
             >
               <span>Registration</span> <ArrowRightIcon className="w-5 md:w-6" />
             </Link>
