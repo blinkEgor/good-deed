@@ -263,6 +263,9 @@ export async function getFriends(auth_username:string) {
   auth();
   try{
     const friends_list = await sql`SELECT friends FROM users WHERE users.name = ${auth_username};`;
+    if(friends_list.rows[0]['friends']===null){
+      return [''] as string[];
+    }
     return friends_list.rows[0]['friends'] as string[];
   }catch(error){
     console.error('Failed query:',error);
